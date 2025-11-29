@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<!--poopfart-->
+<html id="hydrated" lang="en">
+	<head><head><script src="/checkhttp.js"></script>
+        <meta property="og:site_name" content="Rafdo">
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+		<meta
+			http-equiv="Cache-Control"
+			content="no-cache, no-store, must-revalidate"
+		/>
+		<meta http-equiv="Pragma" content="no-cache" />
+		<meta http-equiv="Expires" content="0" />
+		<meta
+			name="description"
+			content="Ráfdo is a bunch of websites that are useful and/or funny! They are awesome and they're made by Fox!"
+		/>
+		<meta
+			name="keywords"
+			content="keyword,google,seo,pleaseshowup,rafdo,imagequest,jonesmcsites,websites,greatwebsites,coding,howtocode,how to code for 10 year olds, what,suffer"
+		/>
+		<link rel="stylesheet" href="/style.css" />
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+			integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+			crossorigin="anonymous"
+			referrerpolicy="no-referrer"
+		/>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+		<link
+			rel="stylesheet"
+			href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400">
+		<link rel="stylesheet" href="/fb.css" />
+		<link rel="shortcut icon" href="/images/favicon.jpg" />
+        <script src='/assets/elevator.js'></script>
+        <script src="/scripts/IMPORTANT.js"></script>
+		<title>Ráfdo</title>
+		<style>
+			*,
+			*::before,
+			*::after {
+				box-sizing: border-box;
+			}
+
+            html {
+                overflow-x: hidden;
+            }
+
+            ul {
+                line-height: 1.5;
+            }
+
+            #hydrated {
+                visibility: inherit;
+            }
+
+			#window-wrapper {
+				font-family: Montserrat, "Montserrat", 'Avenir New', Avenir, BlinkMacSystemFont, 'Segoe UI',
+					system-ui;
+				background: white !important;
+			}
+
+            #window {
+				color: black !important;
+				text-shadow: none !important;
+            }
+
+			#close-suffer {
+				float: right;
+			}
+
+			.column {
+				float: left;
+				/* make sure columns stick to the left. */
+				width: 33.3%;
+				/* there should be three columns per row */
+				margin-bottom: 16px;
+				/* bottom margin */
+				padding: 0 8px;
+				/* padding */
+			}
+
+			.card {
+				box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+				/* add a nice box shadow to our team card. */
+				margin: 8px;
+				/* give it a margin of 8px */
+			}
+
+			/* now the section with the splash screen and navbar. */
+			/* TODO: Add mobile menu */
+			.splash-and-navigation {
+				text-align: center;
+				/* text in the center. */
+				background-color: #474e5d;
+				/* add a background color. */
+				color: white;
+				/* set the text to white */
+				display: flex;
+				/* flexbox is the best way to style things */
+				background-image: url('/images/homebg.jpeg') !important;
+				/* add the cool splash background. */
+				width: 100vw;
+				/* make it as wide as the screen, */
+				height: 75vh;
+				/* but not as tall as the screen so users know there is more content after. */
+
+				/* make the background cover. */
+				background-position: center center;
+				background-size: cover;
+			}
+
+			/* this is the logo in the header. */
+			.logo {
+				font-size: 5em;
+				/* set logo font size. */
+				padding: 20px;
+				/* add padding so the logo isn't all squished up with its background */
+				border-radius: 10px;
+				/* border radius */
+				background: white;
+				/* add white background */
+				margin-right: 80px;
+                transform: translateX(-30%)
+			}
+
+			/* give container centerness. */
+			.splash-and-navigation .container {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+
+			/* set our our team section container and row styles. */
+			.conainer {
+				padding: 0 16px;
+			}
+
+			.conainer::after,
+			.row::after {
+				content: '';
+				clear: both;
+				display: table;
+			}
+
+			/* make gray title. */
+			.title {
+				color: #585858;
+			}
+
+			.button {
+				/* remove default button border and outline. */
+				border: none;
+				outline: 0;
+
+				display: inline-block;
+				/* set display to inline block */
+				padding: 8px;
+				/* add padding */
+				color: white;
+				/* white color */
+				background-color: #000;
+				/* black bg. */
+				text-align: center;
+				/* text center */
+				cursor: pointer;
+				/* pointer cursor */
+				width: 100%;
+				/* 100% width */
+			}
+
+			/* TODO: Remove some comments above this line. */
+
+			.button a {
+				width: max-content;
+				color: white;
+				text-decoration: none;
+			}
+
+			.button:hover {
+				background-color: #555;
+			}
+
+			dialog * {
+				padding: 5px;
+				margin: 5px;
+			}
+
+			@media screen and (max-width: 650px) {
+				.column {
+					width: 100%;
+					display: block;
+				}
+			}
+
+			.text-light {
+				color: #6f8394;
+			}
+
+			.site-footer {
+				font-size: 14px;
+				line-height: 20px;
+				letter-spacing: 0;
+				background: #1f2b35;
+				font-family: 'Plus Jakarta Sans', sans-serif;
+			}
+
+			.site-footer a {
+				text-decoration: none;
+			}
+
+			.site-footer a:active,
+			.site-footer a:hover,
+			.site-footer a {
+				color: #6f8394;
+			}
+
+			.site-footer a:hover,
+			.site-footer a:active {
+				text-decoration: underline;
+			}
+
+			.site-footer-inner {
+				position: relative;
+				display: flex;
+				flex-wrap: wrap;
+				padding-top: 40px;
+				padding-bottom: 40px;
+				padding-left: 40px;
+			}
+
+			.list-reset {
+				list-style: none;
+				padding: 0;
+			}
+
+			ul.footer-ul {
+				margin-top: 0;
+			}
+
+			.footerlogo {
+				font-size: 36px;
+				color: white !important;
+				font-family: 'Plus Jakarta Sans', 'Helvetica Neue', Arial, Helvetica,
+					sans-serif;
+			}
+
+			.site-footer-inner.has-top-divider::before {
+				background: rgba(255, 255, 255, 0.08);
+			}
+
+			.footer-brand,
+			.footer-copyright,
+			.footer-links,
+			.footer-secondary-links {
+				flex: none;
+				width: 100%;
+				display: inline-flex;
+				justify-content: center;
+			}
+
+			.footer-brand,
+			.footer-links,
+			.footer-secondary-links {
+				margin-bottom: 24px;
+			}
+
+			.footer-secondary-links li a {
+				padding: 0px;
+			}
+
+			.footer-links li + li,
+			.footer-secondary-links li + li {
+				margin-left: 16px;
+			}
+
+			.footer-secondary-links li {
+				display: inline-flex;
+			}
+
+			.footer-secondary-links li a {
+				padding: 0px;
+			}
+
+			@media (min-width: 641px) {
+				.site-footer-inner {
+					justify-content: space-between;
+				}
+
+				.footer-brand,
+				.footer-copyright,
+				.footer-links,
+				.footer-secondary-links {
+					flex: 50%;
+				}
+
+				.footer-brand,
+				.footer-copyright {
+					justify-content: flex-start;
+				}
+
+				.footer-links,
+				.footer-secondary-links {
+					justify-content: flex-end;
+				}
+
+				.footer-links {
+					order: 1;
+					margin-bottom: 0;
+				}
+			}
+
+			.container2 {
+				max-width: 1128px;
+			}
+
+			@media (min-width: 481px) {
+				.container2 {
+					padding-left: 24px;
+					padding-right: 24px;
+				}
+			}
+
+			@media (max-width: 1079px) {
+				.logo,
+				.socialmedia {
+					display: none;
+				}
+			}
+
+			a.logo-a {
+				padding: 0 !important;
+			}
+
+			#suffer-close {
+				margin-left: 100%;
+				padding-right: 0;
+			}
+            .elevator {
+    text-align: center;
+    cursor: pointer;
+    width: 140px;
+    margin: auto;
+}
+
+.elevator:hover {
+    opacity: 0.7;
+}
+
+.elevator svg {
+    width: 40px;
+    height: 40px;
+    display: block;
+    margin: auto;
+    margin-bottom: 5px;
+}
+		</style>
+		<script src="/checkhttp.js"></script>
+		<script src="/scripts.js"></script>
+	</head>
+
+	<body id="window-wrapper">
+		<span id="window">
+            <!-- Google tag (gtag.js) -->
+            <script
+                async
+                src="https://www.googletagmanager.com/gtag/js?id=G-2LLP0J8N35"
+            ></script>
+            <script>
+                window.dataLayer = window.dataLayer || []
+                function gtag() {
+                    dataLayer.push(arguments)
+                }
+                gtag('js', new Date())
+
+                gtag('config', 'G-2LLP0J8N35')
+            </script>
+            <noscript>
+                <div style="height: 100vh; width: 100vw; display: flex; align-items: center; justify-content: center; position: absolute; margin: 0; background: white; color: black; z-index:9999"><style>html { overflow-y: hidden; } </style><p style="font-size: 3em;">Please enable JavaScript for this site to work</p></div>
+            </noscript>
+            <span id="window-content">
+                <dialog id="suffer-movie-dialog">
+                    <!-- suffer!</-->
+                    <button id="close-suffer">&times;</button>
+                    <br />
+                    THE SUFFER MOVIE IS <em><strong>OUT</strong></em
+                    >!!!!!!
+                    <br />
+                    <a href="https://www.youtube.com/watch?v=K3nj0JyHf0A"
+                        ><img
+                            src="https://img.youtube.com/vi/K3nj0JyHf0A/maxresdefault.jpg"
+                            alt="Suffer movie thumbnail"
+                            width="500"
+                    /></a>
+                    <a class="button" href="https://www.youtube.com/watch?v=K3nj0JyHf0A"
+                        >WATCH NOW!!!!!!</a
+                    >
+                </dialog>
+
+                <header class="splash-and-navigation">
+                    <nav class="navigation">
+                        <ul class="navigation-menu">
+                            <li>
+                                <a class="logo-a" href="/home.html"
+                                    ><img
+                                        src="https://rafdo-search.vercel.app/images/logo.png"
+                                        alt="Ráfdo"
+                                        width="85"
+                                        style="background: white; padding: 3px; border-radius: 10px"
+                                /></a>
+                            </li>
+                            <li><a href="/">Home</a></li>
+                            <li><a href="/go/fwlink/c/?LinkId=0008">Search</a></li>
+                            <li><a href="/go/fwlink/c/?LinkId=0011">Products</a></li>
+                            <li><a href="/go/fwlink/c/?LinkId=0009">About Fox</a></li>
+                            <li>
+                                <a href="/games/index">Games</a>
+                            </li>
+                            <!--
+                    <li>
+                        <div class="dropdown">
+                            <a href="#" class="dropbtn">Legal<i class="fa fa-caret-down"></i></a>
+                            <div class="dropdown-content">
+                                <a href="/terms">Terms of Service</a>
+                                <a href="/privacy">Privacy Policy</a>
+                                <a href="/cookies">Cookie Policy</a>
+                            </div>
+                        </div>
+                    </li><li><a href="https://foxsrandomthoughts.wordpress.com">Fox's Random Thoughts</a></li>
+                    <li><a href="https://blackhole-3khh.onrender.com">Black Hole</a></li>-->
+                            <!--<li>
+                        <div class="dropdown">
+                            <a href="#" class="dropbtn">Reference<i class="fa fa-caret-down"></i></a>
+                            <div class="dropdown-content">
+                                <a href="https://wikiopidia.weebly.com">Wikiopidia</a>
+                                <a href="https://nomboro.weebly.com">Nomboro</a>
+                                <a href="https://dinosaue.weebly.com">Dinosaue3</a>
+                            </div>
+                        </div>
+                    </li>-->
+                        </ul>
+                    </nav>
+                    <div class="container">
+                        <img
+                            class="logo"
+                            src="https://rafdo-search.vercel.app/images/logo.png"
+                            alt="Ráfdo"
+                        />
+                    </div>
+                    <!--
+    <element class="socialmedia">
+    <style></style><div style="display: flex; flex-wrap:wrap; align-items: center; justify-content: center;"><a href="https://www.facebook.com/RáfdoUpdates/" target="_blank" rel="noopener noreferrer" class="socialicon" style="text-decoration:none;border:0;width:41px;height:41px;padding:2px;margin:5px;color:#ffffff;border-radius:50%;background-color:#4267b2;"><svg class="niftybutton-facebook" style="display:block;fill:currentColor" data-donate="true" data-tag="fac" data-name="Facebook" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet">
+        <path d="M211.9 197.4h-36.7v59.9h36.7V433.1h70.5V256.5h49.2l5.2-59.1h-54.4c0 0 0-22.1 0-33.7 0-13.9 2.8-19.5 16.3-19.5 10.9 0 38.2 0 38.2 0V82.9c0 0-40.2 0-48.8 0 -52.5 0-76.1 23.1-76.1 67.3C211.9 188.8 211.9 197.4 211.9 197.4z"></path><div style="display: flex; flex-wrap:wrap; align-items: center; justify-content: center;"><a href="https://youtube.com/@321sas" target="_blank" rel="noopener noreferrer" style="text-decoration:none;border:0;width:41px;height:41px;padding:2px;margin:5px;color:#ff0000;border-radius:50%;background-color:#ffffff;"><svg class="niftybutton-youtube" style="display:block;fill:currentColor" data-donate="true" data-tag="you" data-name="YouTube" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"><title>YouTube social icon</title>
+        <path d="M422.6 193.6c-5.3-45.3-23.3-51.6-59-54 -50.8-3.5-164.3-3.5-215.1 0 -35.7 2.4-53.7 8.7-59 54 -4 33.6-4 91.1 0 124.8 5.3 45.3 23.3 51.6 59 54 50.9 3.5 164.3 3.5 215.1 0 35.7-2.4 53.7-8.7 59-54C426.6 284.8 426.6 227.3 422.6 193.6zM222.2 303.4v-94.6l90.7 47.3L222.2 303.4z"></path>
+    </svg></a></div><div style="display: flex; flex-wrap:wrap; align-items: center; justify-content: center;"><a href="https://github.com/tj-commits" target="_blank" rel="noopener noreferrer" style="text-decoration:none;border:0;width:41px;height:41px;padding:2px;margin:5px;color:#000000;border-radius:50%;background-color:#ffffff;"><svg class="niftybutton-github" style="display:block;fill:currentColor" data-donate="true" data-tag="git" data-name="Github" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"><title>Github social icon</title>
+        <path d="M256 70.7c-102.6 0-185.9 83.2-185.9 185.9 0 82.1 53.3 151.8 127.1 176.4 9.3 1.7 12.3-4 12.3-8.9V389.4c-51.7 11.3-62.5-21.9-62.5-21.9 -8.4-21.5-20.6-27.2-20.6-27.2 -16.9-11.5 1.3-11.3 1.3-11.3 18.7 1.3 28.5 19.2 28.5 19.2 16.6 28.4 43.5 20.2 54.1 15.4 1.7-12 6.5-20.2 11.8-24.9 -41.3-4.7-84.7-20.6-84.7-91.9 0-20.3 7.3-36.9 19.2-49.9 -1.9-4.7-8.3-23.6 1.8-49.2 0 0 15.6-5 51.1 19.1 14.8-4.1 30.7-6.2 46.5-6.3 15.8 0.1 31.7 2.1 46.6 6.3 35.5-24 51.1-19.1 51.1-19.1 10.1 25.6 3.8 44.5 1.8 49.2 11.9 13 19.1 29.6 19.1 49.9 0 71.4-43.5 87.1-84.9 91.7 6.7 5.8 12.8 17.1 12.8 34.4 0 24.9 0 44.9 0 51 0 4.9 3 10.7 12.4 8.9 73.8-24.6 127-94.3 127-176.4C441.9 153.9 358.6 70.7 256 70.7z"></path>
+    </svg></a>
+
+
+    </div></element>-->
+                </header>
+
+                <main>
+                    <h2 style="text-align: center">Our Team</h2>
+
+                    <div class="row">
+                        <div class="column">
+                            <div class="card">
+                                <img src="/images/fox.jpg" alt="Fox" style="width: 100%" />
+                                <div class="conainer">
+                                    <h2>Fox</h2>
+                                    <p class="title">
+                                        CEO, Founder, Developer, and everything else
+                                    </p>
+                                    <p>
+                                        Hi, I am the guy who basically does everything related to
+                                        Ráfdo.
+                                    </p>
+                                    <p>thefoxjones@gmail.com</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="card">
+                                <div class="conainer">
+                                    <h2>literally no one else</h2>
+                                    <p class="title">fox is literally the only team member</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <style>#adsect a.button{
+                        width: fit-content;
+                        border-radius: 5px;
+                        background: transparent;
+                        color: black;
+                    } #adsect{
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        flex-direction: column;margin: 2px;}#adsect .adsectsect{
+
+                        margin-bottom: 2em;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        flex-direction: column;}</style>
+                    <center id="adsect"><!--<h2>Introducing Rafdo Quotes!</h2><p>Rafdo Quotes is a daily quote page! Check every day for the quote of the day!</p>
+                        <button onclick="location.assign('/app/quotes/')" class="btn">Visit Rafdo Quotes</button>
+                        <h3>quote of the day</h3>
+                        <iframe src="/app/quotes/dayquote.html" frameborder="0" style="width: 70vw;" height="600"></iframe>--><h2>CHECK THIS OUT!!!!!!!!!!</h2><p>I wrote a book!</p><div class="adsectsect">
+                        <a href="/go/fwlink/c/?LinkId=0004"><img src="images/IHAVENOIDEA.jpg" alt="Steve Smith book" width="300"></a>
+                        <a class="button" href="/go/fwlink/c/?LinkId=0004">Buy my book, Steve Smith, only $9 on Amazon!</a>
+</div><div class="adsectsect">
+                        <a href="/go/fwlink/c/?LinkId=0005"
+                        ><img
+                            src="https://img.youtube.com/vi/K3nj0JyHf0A/maxresdefault.jpg"
+                            alt="Suffer movie thumbnail"
+                            width="500"
+                    /></a>
+                    <a class="button" href="/go/fwlink/c/?LinkId=0005"
+                        >Watch The Suffer Movie for free on YouTube!</a
+                    >
+                    <a class="button" href="/go/fwlink/c/?LinkId=0006"
+                        >And once you're done with that, watch part 2! It's even better!!!</a
+                    ></div>
+                    </center>
+
+                    <center>
+
+                        <h2>About Us</h2>
+                        <p>
+                            Rafdo is some sites that are useful and fun websites, videos,
+                            movies, and books, like Rafdo Notepad and Rafdo Search. Fox invented
+                            Rafdo a long time ago and now is coding all of the products for it.
+                            Some of our websites are static HTML, CSS, and JS websites, some are
+                            Weebly websites, and some are Next.js sites.
+                        </p>
+                        <p><a href="/go/fwlink/c/?LinkId=0009">About Fox</a></p>
+                    </center>
+                    <center>
+                        <h2 id="products">All Stuff</h2>
+                        <p>Things by Ráfdo, or random things i've made.</p>
+                    </center>
+                    <ul>
+                        <li><a href="/go/fwlink/c/?LinkId=0008">Rafdo<!----> Search</a></li>
+            <li><a href="https://mrrps.vercel.app">Mrrps</a></li>
+                                <li><a href="/r2//notepad/">Rafdo Notepad</a></li>
+                        <li><a href="https://rafdo.gt.tc/rafdocaptcha/">Rafdo CAPTCHA</a></li>
+                        <li><a href="/go/fwlink/c/?LinkId=0007">Anarchy Website</a></li>
+                        <li><a href="https://wikiopidia.weebly.com">Wikiopedia</a></li>
+                        <!-- here is a comment -->
+                        <li><a href="https://tj-commits.github.io/maps/">Rafdo Maps</a></li>
+                        <li><a href="https://devsandbox.vercel.app">DevSandbox</a></li>
+                        <li><a href="/useful/digiclock/">Online Digital Clock</a></li>
+                        <li><a href="/useful/stopwatch/">Online Stopwatch</a></li>
+                        <li><a href="/go/fwlink/c/?LinkId=0010">blog thing i dont update much</a></li>
+                        <li><a href="https://rafdo-notes.vercel.app">Rafdo Notes (markdown supported)</a></li>
+                        <li><a href="https://tj-commits.github.io/tasks/">Rafdo Tasks</a></li>
+                        
+                        <li>
+                            <a href="/games/index">Rafdo Games</a>
+                        </li>
+                                <li><a href="https://www.youtube.com/watch?v=K3nj0JyHf0A">The Suffer Movie</a></li>
+                                <li><a href="https://www.youtube.com/watch?v=QaYgV9yr2Ms">The Suffer Movie pt. II</a></li>
+                                <li><a href="https://www.amazon.com/dp/B0DS1459DQ">Steve Smith</a></li>
+                                <li><a href="/app/randemoji/">Random Emoji Generator</a></li><!---
+                                <li><a href="/app/quotes/">Rafdo Quotes</a></li>-->
+                                <li><a href="/r2//gibberish">Keyboard Mash and Gibberish Generator</a></li>
+                                <li><a href="/r2/">Infinite Colored Letters</a></li>
+                                <li><a href="/r2//virus/warning.html">Browser Virus</a></li>
+                                <li><a href="/r2//ee">EEEEEEEE</a></li>
+                                <li><a href="https://github.com/tj-commits/falsejs">FalseJS Coding Project</a></li>
+                    </ul>
+                    <br />
+                    <br />
+
+                     <div class="do-the-thing">
+                <div class="elevator">
+                    <svg class="sweet-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve" height="100px" width="100px">
+                        <path d="M70,47.5H30c-1.4,0-2.5,1.1-2.5,2.5v40c0,1.4,1.1,2.5,2.5,2.5h40c1.4,0,2.5-1.1,2.5-2.5V50C72.5,48.6,71.4,47.5,70,47.5z   M47.5,87.5h-5v-25h5V87.5z M57.5,87.5h-5v-25h5V87.5z M67.5,87.5h-5V60c0-1.4-1.1-2.5-2.5-2.5H40c-1.4,0-2.5,1.1-2.5,2.5v27.5h-5  v-35h35V87.5z"/>
+                        <path d="M50,42.5c1.4,0,2.5-1.1,2.5-2.5V16l5.7,5.7c0.5,0.5,1.1,0.7,1.8,0.7s1.3-0.2,1.8-0.7c1-1,1-2.6,0-3.5l-10-10  c-1-1-2.6-1-3.5,0l-10,10c-1,1-1,2.6,0,3.5c1,1,2.6,1,3.5,0l5.7-5.7v24C47.5,41.4,48.6,42.5,50,42.5z"/>
+                    </svg>
+                    Back to Top
+                </div>
+            </div>
+                    <div style="padding: 10px"><hr class="text-light" /></div>
+                    <br /><br />
+                </main>
+                
+                <footer class="site-footer text-light">
+                    <div class="container2">
+                        <div class="site-footer-inner has-top-divider">
+                            <div class="brand footer-brand">
+                                <a href="/home.html">
+                                    <h1 class="footerlogo">Ráfdo</h1>
+                                </a>
+                            </div>
+                            <ul class="footer-links list-reset footer-ul">
+                                <li>
+                                    <a href="/games/index">Games</a>
+                                </li>
+                                <li>
+                                    <a href="/go/fwlink/c/?LinkId=0011">All Stuff</a>
+                                </li>
+                                <li>
+                                    <a href="/go/fwlink/c/?LinkId=0009">About Fox</a>
+                                </li>
+                            </ul>
+                            <ul class="footer-secondary-links list-reset">
+                                <li>
+                                    <a href="https://facebook.com/RáfdoUpdates/"
+                                        ><img
+                                            src="/images/fb.png"
+                                            alt="Facebook icon"
+                                            height="30"
+                                            width="30"
+                                    /></a>
+                                </li>
+                                <li>
+                                    <a href="https://youtube.com/@321sas"
+                                        ><img
+                                            src="/images/yt.webp"
+                                            alt="Youtube icon"
+                                            height="30"
+                                            width="30"
+                                    /></a>
+                                </li>
+                                <li>
+                                    <a href="https://github.com/tj-commits"
+                                        ><img
+                                            src="/images/gh.png"
+                                            alt="Github icon"
+                                            height="30"
+                                            width="30"
+                                    /></a>
+                                </li>
+                            </ul>
+
+                            <div class="footer-copyright">
+                                Powered by InfinityFree
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </span>
+		</span>
+             <script>
+
+            // Simple elevator usage.
+            var elementButton = document.querySelector('.elevator');
+            var elevator = new Elevator({
+                element: elementButton,
+                mainAudio: '/assets/elevator.mp3', // Music from http://www.bensound.com/
+                endAudio:  '/assets/ding.mp3'
+            });
+
+        </script>
+    
+	<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ffe5cfc1778e4fd0b5546e52ee785111"}'></script><!-- End Cloudflare Web Analytics --></body>
+</html>

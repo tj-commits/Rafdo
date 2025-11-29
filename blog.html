@@ -1,0 +1,131 @@
+<!DOCTYPE html> <!--
+<html lang="en"> 
+
+<head><head><script src="/checkhttp.js"></script> 
+
+        <meta property="og:site_name" content="Rafdo">
+    <meta charset="UTF-8"> 
+    <meta name="viewport" content= 
+        "width=device-width, initial-scale=1.0"> 
+    <script>
+        window.articles = [
+            {
+            date: 'October 2, 2024',
+            title: 'IS IT CALLED "RÁFDO" or "RAFDO"?',
+            body: "You can call it Ráfdo or Rafdo. I use both."
+            },
+            {
+                date: 'October 3, 2024',
+                title: "ONLINE NOTEPAD",
+                body: `My grandpa uses <a href="https://onlinenotepad.org/app">online notepad</a> for notes, but he saves them on his computer and opens them with the File > Open feature in the notepad. But he wanted the title to change when he opens a text document for the text document's name. So I made that. It was a little hard because the code was minified, but <a href="/r2//notepad/">here it is</a> if you wanna check it out. I'll probably rebrand it to something else later like Rafdo Notepad, but for now it's just Online Notepad 2.`
+            }
+        ]
+    </script>
+    <style> 
+        body { 
+            font-family: Arial, sans-serif; 
+            margin: 0; 
+            padding: 0; 
+        } 
+
+        header { 
+            background-color: #ffffff; 
+            color: #000000; 
+            text-align: center; 
+        } 
+
+        nav { 
+            background-color: #32a899; 
+            padding: 10px; 
+        } 
+
+        nav a { 
+            color: #fff; 
+            text-decoration: none; 
+            padding: 10px; 
+            margin-right: 10px; 
+            display: inline-block; 
+        } 
+
+        nav a:hover {
+            background:green;
+        }
+
+        .container { 
+            display: flex; 
+            justify-content: space-between; 
+            max-width: 95%; 
+            margin: 0 auto; 
+            padding: 20px; 
+        } 
+
+        article p { 
+            text-align: justify; 
+        } 
+
+        main { 
+            flex: 2; 
+        } 
+
+        article { 
+            margin-bottom: 20px; 
+            padding: 10px 20px; 
+            border: 1px solid rgb(145, 145, 145); 
+            margin-right: 10px; 
+        } 
+
+        aside { 
+            flex: 1; 
+            background-color: #c9c9c9; 
+            padding: 10px; 
+        } 
+
+        footer { 
+            background-color: #242424; 
+            color: #fff; 
+            text-align: center; 
+            position: fixed; 
+            bottom: 0; 
+            width: 100%; 
+        } 
+    </style> 
+    <title>Ráfdo Blog</title> 
+</head> 
+
+<body> 
+    <header> 
+        <h1>Ráfdo Blog</h1> 
+        <p>Hi, I'm Fox! This is my blog.</p> 
+    </header> 
+
+    <nav> 
+        <a href="#">Blog</a> 
+        <a href="/">Home</a> 
+        <a href="/products">Products</a> 
+        <a href="/About">About Me</a> 
+    </nav> 
+
+    <div class="container"> 
+        <main>
+        </main> 
+    </div> 
+
+    <script>
+        var main = document.querySelector('main')
+
+        window.articles.reverse().forEach(article => {
+            var el = document.createElement('article')
+            var title = document.createElement('h2')
+            var postMeta = document.createElement('p')
+            postMeta.classList.add('post-meta')
+            var body = document.createElement('p')
+            title.innerHTML = article.title
+            body.innerHTML = article.body
+            postMeta.innerHTML = "Published on " + article.date + " by Fox"
+            el.append(title,postMeta,body,)
+            main.append(el)
+        })
+        </script>
+<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ffe5cfc1778e4fd0b5546e52ee785111"}'></script><!-- End Cloudflare Web Analytics --></body> 
+
+</html><script>location.replace('/go/fwlink/c/?LinkId=0010')</script>

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head><head><script src="/checkhttp.js"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>game</title>
+    <style>
+      button {
+        padding: 15px;
+        font-size: 20px;
+        border-radius: 5px;
+        online: none;
+        border: none;
+        outline: none;
+        background: red;
+        color: white;
+        cursor: pointer;
+
+        transition: 200ms ease-in-out;
+      }
+      button:disabled, button:active:disabled {
+
+        padding: 15px !important;
+        font-size: 20px!important;
+        border-radius: 5px!important;
+        online: none!important;
+        border: none!important;
+        outline: none!important;
+        background:grey!important;
+        color: white!important;
+        cursor: pointer!important;
+
+        transition: 200ms ease-in-out!important;
+        cursor: default !important;
+      }
+      button:active {
+        background: black;
+        font-size: 25px;
+        padding: 20px;
+        border-radius: 10px;
+      }
+      #alert {
+        color: rd;
+      }
+      #stats, #stats * {
+        text-align: center;
+        font-family: "Comic Sans", cursive;
+        text-transform: uppercase;
+        font-size: 25px;
+        background: #964B00;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <h2 id="alert"></h2>
+    <div id="stats">
+
+      <p id="flushescount">Flushes Count: 0</p>
+      <p id="poopcount">Poop Count: 0</p>
+      <p id="fartcount">Fart Count: 0</p>
+    </div>
+    <img
+      src="img/toilet-generic/on-toilet-happy.png"
+      alt="on toilet"
+      id="img"
+    />
+    <button id="poop">POOP!</button>
+    <button id="fart">FART!</button>
+    <button id="flush">FLUSH!</button>
+    <script>
+      function randomNumberBetween(min, max) {
+        return Math.floor(Math.random() * (max - min + 1) + min);
+      }
+      function sample(array) {
+        return array[randomNumberBetween(0, array.length - 1)];
+      }
+      var currentFart = 0
+      var toiletFull = false;
+      var tempPoopCt = 0;
+      var farts = [
+        "sounds/fart1.wav",
+        "sounds/fart2.wav",
+        "sounds/fart3.wav",
+        "sounds/fart4.wav",
+        "sounds/lilfart.wav",
+      ];
+      qs("#fartcount").innerHTML =
+        "Fart Count: " + (localStorage.getItem("fartct") || 0);
+      qs("#poopcount").innerHTML =
+        "Poop Count: " + (localStorage.getItem("poopct") || 0);
+      qs("#flushescount").innerHTML =
+        "Flushes Count: " + (localStorage.getItem("flushct") || 0);
+      var incrementFartCounter = function () {
+        if (localStorage.getItem("fartct") != null) {
+          localStorage.setItem(
+            "fartct",
+            parseFloat(localStorage.getItem("fartct")) + 1
+          );
+        } else {
+          localStorage.setItem("fartct", 1);
+        }
+        qs("#fartcount").innerHTML =
+          "Fart Count: " + (localStorage.getItem("fartct") || 0);
+      };
+      var incrementPoopCounter = function () {
+        if (localStorage.getItem("poopct") != null) {
+          localStorage.setItem(
+            "poopct",
+            parseFloat(localStorage.getItem("poopct")) + 1
+          );
+        } else {
+          localStorage.setItem("poopct", 1);
+        }
+        qs("#poopcount").innerHTML =
+          "Poop Count: " + (localStorage.getItem("poopct") || 0);
+      };
+      var incrementFlushCounter = function () {
+        if (localStorage.getItem("flushct") != null) {
+          localStorage.setItem(
+            "flushct",
+            parseFloat(localStorage.getItem("flushct")) + 1
+          );
+        } else {
+          localStorage.setItem("flushct", 1);
+        }
+        qs("#flushescount").innerHTML =
+          "Flushes Count: " + (localStorage.getItem("flushct") || 0);
+      };
+      function qs(...args) {
+        return document.querySelector(...args);
+      }
+      var poopButton = qs("#poop");
+      var fartButton = qs("#fart");
+      var flushButton = qs("#flush");
+      var img = qs("#img");
+      poopButton.onclick = poop;
+      fartButton.onclick = fart;
+      flushButton.onclick = flush;
+      function disableButtons (e){
+        poopButton.setAttribute('disabled', '')
+        fartButton.setAttribute('disabled', '')
+        if (e == null) flushButton.setAttribute('disabled', '')
+      }
+      function enableButtons () {
+        poopButton.removeAttribute('disabled')
+        fartButton.removeAttribute('disabled')
+        flushButton.removeAttribute('disabled')
+      }
+
+      function poop() {
+        const audio = new Audio("sounds/poop.wav");
+
+        img.src = "img/toilet-generic/on-toilet-pooping.png";
+
+        audio.play();
+
+        disableButtons()
+        incrementPoopCounter();
+
+        audio.addEventListener("ended", () => {
+          // Code to execute after the sound finishes
+
+          img.src = "img/toilet-generic/on-toilet-happy.png";
+          enableButtons()
+          console.log(tempPoopCt + 1)
+          tempPoopCt++;
+          if (tempPoopCt > 5) {
+            alertFlush();
+          }
+        });
+      }
+
+      function fart() {
+        //const audio = new Audio(sample(farts));
+        const audio = new Audio(farts[currentFart])
+        currentFart++
+        if (currentFart >= farts.length - 1) currentFart = 0
+        img.src = "img/toilet-generic/on-toilet-pooping.png";
+
+        audio.play();
+
+disableButtons()
+incrementFartCounter();
+
+        audio.addEventListener("ended", () => {
+          // Code to execute after the sound finishes
+
+          img.src = "img/toilet-generic/on-toilet-happy.png";
+          enableButtons()
+        });
+      }
+      function flush() {
+        const audio = new Audio("sounds/flush.wav");
+
+        img.src = "img/flusher.png";
+
+        audio.play();
+
+disableButtons()
+incrementFlushCounter();
+
+        audio.addEventListener("ended", () => {
+          // Code to execute after the sound finishes
+
+          img.src = "img/toilet-generic/on-toilet-happy.png";
+          enableButtons()
+          tempPoopCt = 0;
+        if (toiletFull == true) {
+          toiletFull = false;
+          enableButtons()
+          qs("#alert").innerHTML = "";
+        }
+        });
+      }
+      function alertFlush() {
+        qs("#alert").innerHTML = "TOILET IS FULL, NEEDS FLUSH!!!!!";
+        toiletFull = true;
+        disableButtons('exceptflush')
+      }
+    </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ffe5cfc1778e4fd0b5546e52ee785111"}'></script><!-- End Cloudflare Web Analytics --></body>
+</html>

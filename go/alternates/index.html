@@ -1,0 +1,32 @@
+
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+<title>Redirecting...</title>
+<div id="contwet">
+</div>
+<script>
+    // JonesMcSites
+    let params = new URLSearchParams(document.location.search)
+    let linkid = params.get('alt')
+    var conent = document.querySelector('#contwet')
+
+    var q = params.get('q')
+    const MAGIC_WORD = 'inserthere1234567817589147'
+    const LINKS = {
+        "A001": "/go/alternates?alt=A005",
+        "A002": "/go/timeout",
+        "A003": "https://rafdo.rf.gd/ErrorPages/404",
+        "A004": "https://jmcs.rf.gd/404.html",
+        "A005": "/go/fwlink/c/?LinkId=0001"
+    }
+    if (linkid == null) {
+        location.replace('/go/alternates/?alt=A002')
+    } else if (linkid in LINKS) {
+        location.replace(LINKS[linkid])
+    } else if (linkid === '9999') {
+        conent.innerHTML = 'test'
+    } else {
+        location.replace('/go/alternates/?alt=A004')
+    }
+</script>

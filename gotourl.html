@@ -1,0 +1,18 @@
+<h1>Welcome to the Rafdo Browser!</h1>
+<p>Enter a URL to go to:</p>
+<input type="text" placeholder="example.com" id="url" name="url"><button id="urlgo">Go!</button>
+
+<p><a href="https://rafdo-search.vercel.app">Or search on Rafdo Search</a></p>
+
+<script>
+    document.getElementById('urlgo').onclick = function () {
+        var u = document.getElementById('url').value
+        location.replace((function () {
+            if (u.startsWith('http')) {
+                return u
+            } else {
+                return 'http://' + u
+            }
+        })())
+    }
+    </script>

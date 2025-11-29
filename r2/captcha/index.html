@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+    <head><head><script src="/checkhttp.js"></script>
+        <meta charset="utf-8">
+        <title>Captcha</title>
+        <link href="src/fakerecaptcha.css" rel="stylesheet">
+        <style>
+            .cloudsimage {
+                cursor: pointer;
+                width: 130px;
+                height: 100px;
+                transition: 200ms ease-in-out;
+            }
+
+            .cloudsimage.clicked {
+                width: 50;
+                height: 50;
+                background: blue;
+                color: white;
+                content: '&times;';
+                width: 125px;
+                border: 2px solid black;
+                border-radius: 5px;
+            }
+            body {
+  background: white;
+  font-family: 'Segoe UI', sans-serif;
+  font-weight: normal;
+  margin: 50px;
+}
+h1{font-weight:normal;}
+        </style>
+    </head>
+    <body>
+        <h1 id="a"><span id="host">This website</span> <span id="spe">needs to review the security of your connection</span></h1>
+    <p id="plsch">Please check the below box to ensure you are not a robot.</p>
+    <div class="fkrc-container fkrc-m-p">
+        <!-- Captcha checkbox widget -->
+        <div id="fkrc-checkbox-window" class="fkrc-checkbox-window fkrc-m-p fkrc-block">
+            <div class="fkrc-checkbox-container fkrc-m-p">
+                <button type="button" id="fkrc-checkbox" class="fkrc-checkbox fkrc-m-p fkrc-line-normal"></button>
+            </div>
+            <p class="fkrc-im-not-a-robot fkrc-m-p fkrc-line-normal" id="imn">I'm not a robot</p>
+            <img src="https://75a.github.io/fake-captcha/images/captcha_logo.svg" class="fkrc-captcha-logo fkrc-line-normal" alt="">
+            <p class="fkrc-checkbox-desc fkrc-m-p fkrc-line-normal" id="hcap">HegiraCaptcha</p>
+            <p class="fkrc-checkbox-desc fkrc-m-p fkrc-line-normal"><a href="https://policies.google.com/privacy">Privacy</a> - <a href="https://policies.google.com/terms">Terms</a></p>
+            <img src="https://75a.github.io/fake-captcha/images/captcha_spinner.gif" class="fkrc-spinner fkrc-m-p fkrc-line-normal" alt="" id="fkrc-spinner">
+        </div>
+        <!-- Captcha checkbox verification window -->
+        <div id="fkrc-verifywin-window" class="fkrc-verifywin-window">
+            <div class="fkrc-verifywin-container">
+                <header class="fkrc-verifywin-header">
+                    <span class="fkrc-verifywin-header-text-medium fkrc-m-p fkrc-block" id="thi">Select all the squares with</span>
+                    <span class="fkrc-verifywin-header-text-big fkrc-m-p fkrc-block" id="clouds">loading</span>
+                    <span class="fkrc-verifywin-header-text-medium fkrc-m-p fkrc-block" id="fb">Click verify when you are done.</span>
+                </header>
+                <main class="fkrc-verifywin-main">
+
+                    <img id="c1" src="https://cdn.vectorstock.com/i/1000v/49/90/loading-icon-on-black-vector-24544990.jpg" class="cloudsimage">
+                    <img id="c2" src="https://cdn.vectorstock.com/i/1000v/49/90/loading-icon-on-black-vector-24544990.jpg" class="cloudsimage"><br>
+                    <img id="c3" src="https://cdn.vectorstock.com/i/1000v/49/90/loading-icon-on-black-vector-24544990.jpg" class="cloudsimage">
+                    <img id="c4" src="https://cdn.vectorstock.com/i/1000v/49/90/loading-icon-on-black-vector-24544990.jpg" class="cloudsimage"><br>
+                    <img id="c5" src="https://cdn.vectorstock.com/i/1000v/49/90/loading-icon-on-black-vector-24544990.jpg" class="cloudsimage">
+                    <img id="c6" src="https://cdn.vectorstock.com/i/1000v/49/90/loading-icon-on-black-vector-24544990.jpg" class="cloudsimage">
+                </main>
+            </div>
+            <footer class="fkrc-verifywin-container fkrc-verifywin-footer">
+                <div class="fkrc-verifywin-footer-left">
+                    Press the verify button to proceed.
+                </div>
+                <button type="button" class="fkrc-verifywin-verify-button fkrc-block" id="fkrc-verifywin-verify-button">Verify</button>
+            </footer>
+        </div>
+        <img src="https://75a.github.io/fake-captcha/images/captcha_arrow.svg" alt="" class="fkrc-verifywin-window-arrow" id="fkrc-verifywin-window-arrow"/>
+    </div>
+        <script src="src/fakerecaptcha.js"></script>
+        <script>
+            const clouds = [...document.getElementsByClassName('cloudsimage')]
+            clouds.forEach(c => {
+                c.onclick = (e) => {
+                    e.target.classList.toggle('clicked')
+                }
+            })
+            document.getElementById('host').innerHTML = new URLSearchParams(location.search).get('host') || "This website"
+            const p = new URLSearchParams(location.search)
+            document.getElementById('clouds').innerHTML = p.get('thingtext') || 'clouds'
+            document.getElementById('c1').src = p.get('src1') || "https://images.pexels.com/photos/53594/blue-clouds-day-fluffy-53594.jpeg?cs=srgb&dl=pexels-pixabay-53594.jpg&fm=jpg"
+            document.getElementById('c2').src = p.get('src2') || "https://freerangestock.com/sample/68975/man-standing-in-front-of-a-cloud-filled-sky.jpg"
+            document.getElementById('c3').src = p.get('src3') || "https://t4.ftcdn.net/jpg/04/08/87/37/360_F_408873710_BGALzaKeH5u7kQ2l8EzS7lHL2KaM7ad9.jpg"
+            document.getElementById('c4').src = p.get('src4') || "https://images.pexels.com/photos/206959/pexels-photo-206959.jpeg?cs=srgb&dl=pexels-pixabay-206959.jpg&fm=jpg"
+            document.getElementById('c5').src = p.get('src5') || "https://hips.hearstapps.com/countryliving/assets/15/22/1432664914-strawberry-facts1.jpg"
+            document.getElementById('c6').src = p.get('src6') || "https://images.pexels.com/photos/53594/blue-clouds-day-fluffy-53594.jpeg?cs=srgb&dl=pexels-pixabay-53594.jpg&fm=jpg"
+            if (p.get('zalgo') === 'zalgo') {
+                var spe = document.getElementById('spe')
+                spe.innerHTML = "ń̸͕̭͕̚e̶̦͔̔̍e̵̝̩̒͘͜͠ḓ̶̢̟̐s̷̘͊̏̀ ̶͖́̿̕ṱ̶̮͂͌o̶͚̒́̅ ̷̧̚r̶͎͙̓ḛ̵̈́̑̆v̵̨̢̡̛́i̷̤̤͑̕ẽ̷̱͎̒̐w̷̝͉̘̎ ̸̧̊̅̈t̴̮̣͊̚h̶͔̼̩̄̑è̶̖̻͇͑̈́ ̴͓̪̀̀s̴͍̼͉͒͛̅e̶̫̽c̴̤͝u̸̻̝͌̈́ͅř̸̟͉̒i̵̤̓͜t̸͖́̒̈ỳ̵̤̍ ̵̫͚̲̈́̀̌õ̵̤̜̼͌́f̷͚̠̒ ̷̘͇̓̕y̷̧̩̫̅͘o̶̮̾ȕ̴͕̂̎r̶̮̖͚̈́͌͊ ̸͙̓͆c̴̗̔͝ó̶̰̣n̴̳̳̈́͂̍ṅ̸̰̬̠̍e̸͎͂͝c̵̻̜̒͠ţ̵̮͌͂͝ì̸̡̲͗̈́o̸͖̞̙͆͆n̵̳͖͒͝͝"
+                document.getElementById('imn').innerHTML = "I̴̧͋'̴̦͂m̴̼͝ ̸̻̎ṇ̷̈́o̴̠͒t̶̬͐ ̵̣̆ţ̷̚h̷͈̚e̴͓̐ ̵̻̒a̵̻̓n̸̤͒g̷̣̓e̴̳̓l̷̛̟"
+                document.getElementById('plsch').innerHTML = "P̴̞͘l̴͕̚e̵͊ͅā̸̢ș̵͆e̵̱͌ ̵̯̄c̶͎͘h̸̡͘e̶͕̎c̴͇̊k̵̳͒ ̶͎͊t̸̥̊h̴̫̋e̷̱̓ ̴̞̐b̸̧̎e̵̲͘l̴͔̕ò̶ͅw̴͖͝ ̴̻́b̸̩̃o̶̬͋x̷͚͌ ̸̢͐t̶͖̋o̴̗̕ ̵̧̅ë̸̫́n̸͚̆š̶̜ư̷̧r̷̡̚é̴̠ ̷̰͒y̸͇̽o̴͇̎u̵͖͛ ̷͌͜ḁ̵̚r̵̪̒e̸̮͌ ̴͉͛n̶̨͝o̶̪̒t̴̞͆ ̴̜͆t̴̮̀h̸̤̉e̷̺͆.̸͕̾"
+                document.getElementById('hcap').innerHTML = "T̶͓̫̹͍̳͊͑̚h̴̺͐͗e̸̩̻̞͌m̶̨̗̼̅̀͗̕͠"
+                document.getElementById('hcap').style.fontSize ="20px"
+                document.body.style.background = "#333"
+                document.body.style.color = "red"
+                document.getElementById('thi').innerHTML = "r̷̢̛̳͈͐̽͒e̸̟̟̖̫̽̃͛ȃ̴̞̼̳p̴͖̫̈̅̈́ ̸̻͝a̶̧̨̳̟͗͠͝l̶̘̳̾̋l̵͈̋ ̷̰̫̘̼́ţ̶̜̾́̽͝h̵̟̤̦̄ȩ̵̟͍̾̈́̔́ ̶̰̈́̓s̶̯͕̓͠͝q̶̼͓̽̀ͅṳ̷̝̥͈̆a̴̺̙̬̓͠r̴̘͍̤͙̍̄̉e̴̩̒̓s̵͚̺͔̋ ̴͖́̑̍̀w̶͕̱͠i̶̧͔̔͂͜t̸͎̾̑ͅh̸̰͆"
+                document.getElementById('fb').innerHTML = "s̴̰͑e̶͈͔͗̌͘l̶̲̈͛̿è̵̲̱̆͌c̵̢̱̘͉͘t̴̘̰̩́̄̈̔ ̶̨̛̪͙̑v̴̢̤̀e̴͚͊r̷̺͓̲͓͆̂î̷̼̈́͝͝f̵͚͓̥̾̀͠y̷͈̐̃́͝ ̶̢̤̓̅̋̓w̶̥͙͙͇͛͂̋̕h̵̞̞͌ë̵̮̼̗́̿̓n̶̤̺̏̿ ̴̢͖͇̞̃̐́ý̶̨̜̍o̶̦̙͆̊͘ṳ̸̞͙̾ ̴̮̣͕͇͊̓͗a̵̜͂r̴̦͌è̵͉͚̅͛ ̵̖͊̀̏͆d̶̛̹̹͔̠̑̔ơ̶̠̓n̴̘̝̲̈͛̑̌ẹ̵́̿̈́"
+            }
+        </script>
+    <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ffe5cfc1778e4fd0b5546e52ee785111"}'></script><!-- End Cloudflare Web Analytics --></body>
+</html>

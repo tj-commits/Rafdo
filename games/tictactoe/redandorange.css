@@ -1,0 +1,27 @@
+#b1,#b2,#b3,#b4,#b5,#b6,#b7,#b8,#b9 {
+  height:80px;width:80px;
+    position:inherit;border-radius:10px;
+  color: black;
+  background: white;
+  border: 2px solid #333;
+  font-weight: normal;
+  font-size: 300%;
+  cursor: pointer;
+}
+
+.container{
+  width:300px;
+  height: 400px;
+  margin: auto;
+  background: rgb(255,255,0,0.5);
+  margin-top: 50px;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+body {
+  text-align: center;
+  font-family: 'Comic Sans', cursive;
+  background: red;
+  color: white;
+}

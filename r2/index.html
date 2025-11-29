@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><head><script src="/checkhttp.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta property="og:site_name" content="Rafdo">
+    <title>infinite letters</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.5;
+        }
+        #output {
+            margin-top: 20px;
+            font-size: 20px;
+            overflow-wrap: break-word;
+            padding: 5px;
+            border-radius: 10px;
+        }
+    </style>
+     <style>
+
+    .hover-element {
+      background-color: #f00;
+      color: #fff;
+      padding: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      position: absolute;
+      top: 4%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      transition: all 0.05s ease;
+      font-size: 20px;
+      z-index: 1000;
+      text-shadow: 0 0 10px #fff;
+    }
+
+    .flashing-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      transition: background-color 0.01s ease;
+    }
+
+    .bouncing-ball, .spinning-square, .rotating-triangle {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      background-color: red;
+      border-radius: 50%;
+      transition: all 0.05s ease;
+    }
+
+    .spinning-square {
+      border-radius: 0;
+      background-color: blue;
+    }
+
+    .rotating-triangle {
+      width: 0;
+      height: 0;
+      border-left: 25px solid transparent;
+      border-right: 25px solid transparent;
+      border-bottom: 50px solid yellow;
+    }
+
+    @keyframes vibrate {
+      0% { transform: translate(0, 0); }
+      25% { transform: translate(2px, -2px); }
+      50% { transform: translate(-2px, 2px); }
+      75% { transform: translate(2px, 2px); }
+      100% { transform: translate(-2px, -2px); }
+    }
+
+    .hover-element:hover {
+      animation: vibrate 0.05s infinite;
+    }
+
+
+    .hover-element,.flashing-background{
+        display:none
+    }
+
+    #a {
+        position: absolute;
+        right: 30px;
+        top: 700vh;
+        
+    }
+    #b {
+        position: absolute;
+        left: 30px;
+        top: 3000vh;
+        
+    }
+  </style>
+</head>
+<body>
+    <button onclick="location.assign('/')">back</button>
+    <p>If you scroll more letters will be added.</p>
+ 
+  <div class="flashing-background"></div>
+  <div class="hover-element">Infinite Letters</div>
+  <img id="a" src="Kiwi.jpeg" width="300">
+  <img id="b" src="marty.png" width="500">
+
+  <script>
+    const hoverElement = document.querySelector('.hover-element');
+    const flashingBackground = document.querySelector('.flashing-background');
+    let ballX, ballY, ballSpeedX, ballSpeedY;
+    let intervalId, chaosId;
+
+    // Create chaotic shapes
+    const bouncingBall = document.createElement('div');
+    bouncingBall.classList.add('bouncing-ball');
+    document.body.appendChild(bouncingBall);
+
+    const spinningSquare = document.createElement('div');
+    spinningSquare.classList.add('spinning-square');
+    document.body.appendChild(spinningSquare);
+
+    const rotatingTriangle = document.createElement('div');
+    rotatingTriangle.classList.add('rotating-triangle');
+    document.body.appendChild(rotatingTriangle);
+
+    let timeout
+
+    // Random position and speed setup
+    function randomizePositionAndSpeed(element) {
+      let speedX = Math.random() * 20 - 10;
+      let speedY = Math.random() * 20 - 10;
+      let posX = Math.random() * window.innerWidth;
+      let posY = Math.random() * window.innerHeight;
+      return { posX, posY, speedX, speedY };
+    }
+
+    // Update position and speed of elements
+    function moveElement(element, speedX, speedY) {
+      let posX = parseFloat(element.style.left) || 0;
+      let posY = parseFloat(element.style.top) || 0;
+      posX += speedX;
+      posY += speedY;
+
+      if (posX < 0 || posX > window.innerWidth - 50) speedX *= -1;
+      if (posY < 0 || posY > window.innerHeight - 50) speedY *= -1;
+
+      element.style.left = posX + 'px';
+      element.style.top = posY + 'px';
+      return { speedX, speedY };
+    }
+
+    hoverElement.addEventListener('mouseover', () => {
+        clearTimeout(timeout)
+      chaosId = setInterval(() => {
+        // Flashing background
+        flashingBackground.style.backgroundColor = `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255})`;
+
+        // Change hover element properties
+        hoverElement.style.backgroundColor = `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255})`;
+        hoverElement.style.color = `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255})`;
+        hoverElement.style.fontSize = `${Math.random() * 100 + 10}px`;
+        hoverElement.style.padding = `${Math.random() * 50}px`;
+
+        // Random movement for shapes
+        ballData = moveElement(bouncingBall, ballData.speedX, ballData.speedY);
+        squareData = moveElement(spinningSquare, squareData.speedX, squareData.speedY);
+        triangleData = moveElement(rotatingTriangle, triangleData.speedX, triangleData.speedY);
+
+        // Rotating elements
+        spinningSquare.style.transform = `rotate(${Math.random() * 360}deg)`;
+        rotatingTriangle.style.transform = `rotate(${Math.random() * 360}deg)`;
+
+      }, 50);
+    });
+
+    hoverElement.addEventListener('mouseout', () => {
+      clearInterval(chaosId);
+      timeout = setTimeout(function() {
+
+      location.reload()
+      }, 500)
+    });
+
+    // Initialize ball, square, and triangle with random positions and speeds
+    let ballData = randomizePositionAndSpeed(bouncingBall);
+    let squareData = randomizePositionAndSpeed(spinningSquare);
+    let triangleData = randomizePositionAndSpeed(rotatingTriangle);
+
+    // Apply initial positions
+    bouncingBall.style.left = ballData.posX + 'px';
+    bouncingBall.style.top = ballData.posY + 'px';
+
+    spinningSquare.style.left = squareData.posX + 'px';
+    spinningSquare.style.top = squareData.posY + 'px';
+
+    rotatingTriangle.style.left = triangleData.posX + 'px';
+    rotatingTriangle.style.top = triangleData.posY + 'px';
+  </script>
+
+<div id="output"></div>
+
+<script>
+   const letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+   const bgs = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet']
+    let letterIndex = 0
+    let bgIndex = 0
+    function addBs() {
+        const outputDiv = document.getElementById('output');
+        const newBs = letters[letterIndex].repeat(10000) 
+        outputDiv.style.background = bgs[bgIndex]
+        if (bgs[bgIndex] === "yellow") {
+            outputDiv.style.color = "black"
+    } else {
+        outputDiv.style.color="white"
+    }
+        outputDiv.innerText += newBs;
+        letterIndex++
+        bgIndex ++
+        if (letterIndex >= letters.length) {
+            letterIndex = 0
+        }
+        if (bgIndex >= bgs.length) {
+            bgIndex = 0
+        }
+    }
+
+    window.addEventListener('scroll', () => {
+        if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+            addBs();
+        }
+    });
+
+    addBs()
+</script>
+
+<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ffe5cfc1778e4fd0b5546e52ee785111"}'></script><!-- End Cloudflare Web Analytics --></body>
+</html>

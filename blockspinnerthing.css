@@ -1,0 +1,34 @@
+.spinner {
+   width: 100px;
+   height: 100px;
+   border: 1px solid #333333;
+}
+
+.spinner-half {
+   display: flex;
+}
+
+.spinner-block {
+   width: 50px;
+   height: 50px;
+}
+
+.red {
+   background-color: #ff3030;
+}
+
+.indigo {
+   background-color: #5050ff;
+}
+
+.yellow {
+   background-color: #dffe34;
+}
+
+.fuchsia {
+   background-color: #ed0dd9;
+}
+
+.white {
+   background-color: #c0ffff !important;
+}

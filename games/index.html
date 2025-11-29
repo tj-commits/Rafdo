@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head><head><script src="/checkhttp.js"></script>
+		<meta charset="windows-1252" />
+
+        <meta property="og:site_name" content="Rafdo">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta http-equiv="x-dns-prefetch-control" content="on" />
+		<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+		<title>Games - Rafdo</title>
+		<style>
+			.posts {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				grid-template-rows: auto;
+				grid-gap: 20px 22px;
+				justify-content: center;
+				max-width: 1400px;
+				width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+			}
+
+			.container {
+				margin-left: auto;
+				margin-right: auto;
+				color: #000;
+				font-family: RobotoCondensedLight, sans-serif;
+			}
+
+			.link-img {
+				max-width: 100%;
+				cursor: pointer;
+				transition: transform 0.07s linear, filter 0.1s ease-out,
+					opacity 0.15s linear;
+			}
+
+			.link {
+				border-radius: 19px;
+				aspect-ratio: 391/145;
+				display: block;
+				z-index: 2;
+				width: 100%;
+				min-width: 100%;
+			}
+
+			.link-img:hover {
+				transform: scale(1.02);
+				filter: drop-shadow(3px 3px 5px rgba(0, 0, 0, 0.17));
+			}
+		</style>
+	</head>
+	<body>
+    <button onclick="location.assign('/')">Back to Rafdo homepage</button>
+		<div class="container">
+			<div class="posts">
+				<a class="link" href="https://imagequest.vercel.app"
+					><img src="img/imagequest.png" class="link-img" alt="ImageQuest"
+				/></a>
+        <a class="link" href="/games/guesstheword/2omw/entrance"
+					><img src="img/guess-the-words.png" class="link-img" alt="Guess the Words!"
+				/></a><!--
+        <a class="link" href="/games/wordle/"
+					><img src="img/wordle2.jpg" class="link-img" alt="Wordle"
+				/></a>-->
+        <a class="link" href="/games/Number"
+					><img src="img/number.jpg" class="link-img" alt="Number."
+				/></a>
+        <a class="link" href="/games/2048/"
+					><img src="img/2048.jpg" class="link-img" alt="2048"
+				/></a>
+        <a class="link" href="/games/tictactoe/"
+					><img src="img/tic-tac-toe.jpg" class="link-img" alt="Tic Tac Toe"
+				/></a>
+			</div>
+		</div>
+	<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ffe5cfc1778e4fd0b5546e52ee785111"}'></script><!-- End Cloudflare Web Analytics --></body>
+</html>

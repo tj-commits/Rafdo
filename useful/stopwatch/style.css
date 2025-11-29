@@ -1,0 +1,51 @@
+html {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  background: rgb(131,58,180);
+  background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 100%);
+  font-family: "Comic Sans MS", "Comic Sans", cursive;
+  height: 100%;
+}
+
+.wrapper {
+  width: 800px;
+  margin: 30px auto;
+  color: black;
+  text-align: center;
+}
+
+h1,h2,h3{
+  font-weight: 100;
+  font-size:2.6em;
+  
+}
+
+h1{text-transform: uppercase;}
+
+#seconds, #tens, .mins {
+  font-size: 2em; 
+}
+
+button {
+  background: #1196ee;
+  color: white;
+  border: solid 1px lime;
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 1.2em;
+  padding: 18px 10px;
+  width: 180px;
+  margin: 10px;
+  outline: none;
+  transition: 500ms ease-in-out;
+}
+
+button:hover {
+  background: white;
+  border: solid 1px white;
+  color: black;
+}

@@ -1,0 +1,10 @@
+<h1>PLEASE WAIT...</h1>
+<script>
+  const s = new URLSearchParams(window.location.search)
+  const ls = s.get('localstorage')
+
+          const myObject = ls
+        Object.keys(myObject).forEach(key => {
+          var value = myObject[key]
+          localStorage.setItem(key, value)     });
+</script>

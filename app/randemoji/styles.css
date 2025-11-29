@@ -1,0 +1,100 @@
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 75vh;
+  font-weight: bold;
+  background-color: powderblue;
+}
+
+* {
+  margin: 5px;
+  font-family: "Be Vietnam Pro", sans-serif;
+  font-weight: bold;
+}
+
+.emoji {
+  font-size: 7em;
+}
+
+.category {
+  margin-bottom: 19px;
+  margin-top: 30px
+}
+
+.button {
+  border: none;
+  outline: none;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 18px;
+  background-color: black;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 200ms ease-in-out;
+  text-decoration: none !important;
+}
+
+dialog::backdrop {
+  background-color: #333;
+  opacity: 0.5
+}
+
+a.button {
+  margin-bottom: 20px;
+}
+
+.button:hover {
+  background-color: #333;
+}
+
+.snackbar {
+  visibility: hidden;
+  min-width: 250px;
+  margin-left: -125px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 2px;
+  padding: 16px;
+  position: fixed;
+  z-index: 1;
+  left: 50%;
+  bottom: 30px;
+}
+
+.snackbar.show {
+  visibility: visible;
+  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+.snackbar.snackbar-success {
+  background-color: #14a44d;
+}
+
+.snackbar.snackbar-danger {
+  background-color: #dc4c64;
+}
+
+@-webkit-keyframes fadein {
+  from {bottom: 0; opacity: 0;}
+  to {bottom: 30px; opacity: 1;}
+}
+
+@keyframes fadein {
+  from {bottom: 0; opacity: 0;}
+  to {bottom: 30px; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+  from {bottom: 30px; opacity: 1;}
+  to {bottom: 0; opacity: 0;}
+}
+
+@keyframes fadeout {
+  from {bottom: 30px; opacity: 1;}
+  to {bottom: 0; opacity: 0;}
+}

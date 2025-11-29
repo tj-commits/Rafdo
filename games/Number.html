@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+  <head><head><script src="/checkhttp.js"></script>
+
+        <meta property="og:site_name" content="Rafdo">
+    <meta charset="windows-1252" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <script src="/checkhttp.js"></script>
+    <title>Number</title>
+    <style>
+        body {
+            text-align: center;
+        }
+    </style>
+  </head>
+  <body>
+      
+      
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2LLP0J8N35"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-2LLP0J8N35');
+</script>
+
+    
+    <button onclick="location.assign('/games/')">Back to Rafdo Games &larr;</button>
+      <main>
+      <h1 style="font-family: sans-serif;">Number.</h1>
+      <p style="font-family: sans-serif; font-size: 15px !important;">The objective of the game is to get <code>savings</code> to equal <code>GOAL</code>. The options are, <code>giveUp()</code>, which means to give up, <code>newRandomCurrentNumber()</code>, which sets <code>currentRandomNumber</code> to a pseudorandomly-generated number, <code>savings += currentRandomNumber</code>, <code>savings -= currentRandomNumber</code>, <code>savings *= currentRandomNumber</code>, and <code>savings /= currentRandomNumber</code>, which mean to add <code>currentRandomNumber</code> to <code>savings</code>, to subtract <code>currentRandomNumber</code> to <code>savings</code>, to multiply <code>currentRandomNumber</code> by <code>savings</code>, and to divide <code>currentRandomNumber</code> by <code>savings</code> respectively, and the last is <code>removeDecimalPoints()</code>, which removes any decimal points from <savings> added when dividing. 
+      <p><pre style="font-size: 20px;">const GOAL = 100<br>currentRandomNumber = <span data-current-number>7</span><br>savings = <span data-savings>0</span></pre></p><br>
+      <button data-give-up>giveUp()</button><button data-new-number>newRandomCurrentNumber()</button><button data-add-to-savings>savings += currentRandomNumber</button><button data-remove-from-savings>savings -= currentRandomNumber</button><button data-multiply-savings-by>savings *= currentRandomNumber</button><button data-divide-savings-by>savings /= currentRandomNumber</button><button data-floor>removeDecimalPoints()</button>
+      </main>
+      <script>
+          const GOAL = 100
+
+          function randomNumberBetween(min, max) {
+  return Math.floor(Math.random() * (max - min + 1) + min)
+}
+          const curNumTxt = document.querySelector('[data-current-number]')
+          const curSvngsTxt = document.querySelector('[data-savings]')
+
+          const giveUpBtn = document.querySelector('[data-give-up]')
+          const newNumBtn = document.querySelector('[data-new-number]')
+          const add2SvngsBtn = document.querySelector('[data-add-to-savings]')
+          const remFrSvngsBtn = document.querySelector('[data-remove-from-savings]')
+          const mtpySvngsByBtn = document.querySelector('[data-multiply-savings-by]')
+          const divSvngsByBtn = document.querySelector('[data-divide-savings-by]')
+          const floorBtn = document.querySelector('[data-floor]')
+
+          giveUpBtn.addEventListener('click', giveUp)
+          newNumBtn.addEventListener('click', newRandomCurrentNumber)
+          add2SvngsBtn.addEventListener('click', addToSavings)
+          remFrSvngsBtn.addEventListener('click', removeFromSavings)
+          mtpySvngsByBtn.addEventListener('click', multiplySavings)
+          divSvngsByBtn.addEventListener('click', divideSavings)
+          floorBtn.addEventListener('click', removeDecimalPoints)
+
+          newRandomCurrentNumber()
+
+          function giveUp() {
+            document.querySelector('main').innerHTML = '<p style="color: red;">YOU GAVE UP</p>\n<button onclick="window.location.reload()">Try Again</button>'
+          }
+
+          function newRandomCurrentNumber() {
+            curNumTxt.innerText = randomNumberBetween(1, 12 * 2 + 1)
+          }
+
+          function addToSavings() {
+            curSvngsTxt.innerText = parseFloat(curSvngsTxt.innerText) + parseFloat(curNumTxt.innerText)
+            newRandomCurrentNumber()
+            check()
+          }
+
+          function removeFromSavings() {
+            curSvngsTxt.innerText = parseFloat(curSvngsTxt.innerText) - parseFloat(curNumTxt.innerText)
+            newRandomCurrentNumber()
+            check()
+          }
+
+          function multiplySavings() {
+            curSvngsTxt.innerText = parseFloat(curSvngsTxt.innerText) * parseFloat(curNumTxt.innerText)
+            newRandomCurrentNumber()
+            check()
+          }
+
+          function divideSavings() {
+            curSvngsTxt.innerText = parseFloat(curSvngsTxt.innerText) / parseFloat(curNumTxt.innerText)
+            newRandomCurrentNumber()
+            check()
+          }
+
+          function removeDecimalPoints() {
+            curSvngsTxt.innerText = Math.floor(parseFloat(curSvngsTxt.innerText))
+          }
+
+          function check() {
+            if (parseFloat(curSvngsTxt.innerText) == GOAL) {
+                document.querySelector('main').innerHTML = '<p style="color: green;">YOU WIN</p>\n<button onclick="window.location.reload()">Play Again</button>'
+            }
+          }
+          </script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ffe5cfc1778e4fd0b5546e52ee785111"}'></script><!-- End Cloudflare Web Analytics --></body>
+</html>

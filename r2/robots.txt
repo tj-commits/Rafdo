@@ -1,0 +1,8 @@
+User-agent: *
+Disallow: /tt3
+Disallow: /whatis
+Disallow: /goog
+Disallow: /postest
+Disallow: /bor
+Disallow: /mschangingtext
+Disallow: /msglider

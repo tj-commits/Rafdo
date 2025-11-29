@@ -1,0 +1,19 @@
+<button>open window</button>
+<script>
+    var button = document.querySelector('button')
+    var state =0 
+    let otherwindow
+    button.onclick=function () {
+        if (state == 0) {
+            
+        otherwindow = window.open('bor.html', )
+            button.innerHTML = 'close window'
+        state = 1
+        } else {
+            otherwindow.postMessage('close', '*')
+            button.innerHTML = 'open window'
+            state = 0
+            otherwindow = null
+        }
+    }
+</script>

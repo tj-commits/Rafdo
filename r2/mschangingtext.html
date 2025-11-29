@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><head><script src="/checkhttp.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How Short Is A Millisecond?</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+#demo {
+  font-size: 3em;
+}
+  </style>
+</head>
+<body>
+  <p id="demo">A Millisecond</p>
+  <script>
+    var demo = document.getElementById('demo')
+    var msg1 = "A Millisecond"
+    var msg2 = "Is Pretty Short!"
+    function toggleDemoText() {
+      if (demo.innerHTML === msg1) {
+        demo.innerHTML = msg2
+      } else {
+        demo.innerHTML = msg1
+      }
+    }
+    setInterval(toggleDemoText, 1)
+  </script>
+<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ffe5cfc1778e4fd0b5546e52ee785111"}'></script><!-- End Cloudflare Web Analytics --></body>
+</html>

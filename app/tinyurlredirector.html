@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>url shortener redirector</title>
+
+        <script src="/scripts/IMPORTANT.js"></script>
+</head>
+<body>
+  <h1>URL Shortener Redirector</h1>
+  <input type="text" name="id" id="id" placeholder="dQw4w9WgXcQ">
+  <select name="website" id="website">
+    <option value="youtu.be" data-placeholder="dQw4w9WgXcQ">youtu.be</option>
+    <option value="bit.ly" data-placeholder="98K8eH">bit.ly</option>
+    <option value="tinyurl.com" data-placeholder="mpas22fa">tinyurl.com</option>
+    <option value="t.ly" data-placeholder="ucFei">t.ly</option>
+    <option value="cutt.ly" data-placeholder="jWCdxkp">cutt.ly</option>
+    <option value="rebrand.ly" data-placeholder="AirlockRepresentatives">rebrand.ly</option>
+  </select>
+  <button type="submit" name="go" id="go">Go!</button>
+  <script>
+    const id = document.getElementById('id')
+    const websitesel = document.getElementById('website')
+    const go = document.getElementById('go')
+    websitesel.onchange = function () {
+      const selvalue = this.value
+      let selplaceholder
+      for (var i = 0; i < websitesel.children.length; i++) {
+        const v = websitesel.children[i]
+        if (v.getAttribute('value') === selvalue) selplaceholder = v.dataset.placeholder
+      }
+      id.placeholder = selplaceholder
+    }
+
+    go.onclick = function()
+    {
+      location.assign('http://' + websitesel.value + "/" + id.value)
+    }
+  </script>
+</body>
+</html>

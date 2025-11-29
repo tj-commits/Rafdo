@@ -1,0 +1,48 @@
+
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+<title>Redirecting...</title>
+<div id="contwet">
+</div>
+<script>
+    // JonesMcSites
+    let params = new URLSearchParams(document.location.search)
+    let linkid = params.get('LinkId')
+    var conent = document.querySelector('#contwet')
+
+    var q = params.get('q')
+    const MAGIC_WORD = 'inserthere1234567817589147'
+    const LINKS = {
+        "0001": "https://jonesmcsites.epizy.com",
+        "0002": "https://imagequest.vercel.app",
+        "0003": "https://jonesmcsites.infinityfreeapp.com",
+        "0004": "https://www.amazon.com/dp/B0DS1459DQ",
+		"0005": "https://www.youtube.com/watch?v=K3nj0JyHf0A",
+        "0006": "https://www.youtube.com/watch?v=QaYgV9yr2Ms",
+        "0007": "https://anarchy.ct.ws/",
+        "0008": "https://rafdo-search.vercel.app",
+        "0009": "https://gravatar.com/fo6t",
+        "0010": "https://foxsrandomthoughts.wordpress.com",
+        "0011": "https://rafdo.rf.gd/products",
+        "0012": "https://rafdo.rf.gd/games/index",
+        "0013": "https://mrrps.vercel.app/",
+        "0014": "https://rafdo.rf.gd/r2/notepad/",
+        "0015": "https://devsandbox.vercel.app/",
+        "0016": "https://rafdo.rf.gd/useful/digiclock/",
+        "0017": "https://rafdo.rf.gd/useful/stopwatch/",
+        "0018": "https://rafdo.rf.gd/app/randemoji/",
+        
+        "0019":"https://rafdo.rf.gd/app/maps/",
+        "0020": "https://rafdo.gt.tc/rafdocaptcha/"
+    }
+    if (linkid == null) {
+        location.replace('/go/fwlink/c/?LinkId=0001')
+    } else if (linkid in LINKS) {
+        location.replace(LINKS[linkid])
+    } else if (linkid === '9999') {
+        conent.innerHTML = 'test'
+    } else {
+        location.replace('/go/alternates/?alt=A004')
+    }
+</script>

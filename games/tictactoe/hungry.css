@@ -1,0 +1,30 @@
+h1{
+  color:white;
+  font-family: 'Press Start 2P', cursive;
+}
+h2{
+  color:lightyellow;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+}
+#b1,#b2,#b3,#b4,#b5,#b6,#b7,#b8,#b9 {
+  
+  height:80px;
+  width:80px;
+  position:inherit;
+  border-radius: 10px;
+  color:black;
+  border:2px solid aquamarine;
+  font-weight:normal;
+  font-size:300%;
+  
+}
+.container{
+  height: 300px;
+  width:300px;
+  margin: auto;
+}
+body{
+  background-image: url("hungry.png");
+  text-align: center;
+  font-family: 'copperplate', fantasy;
+}

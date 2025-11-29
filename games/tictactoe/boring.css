@@ -1,0 +1,22 @@
+html {
+  height: 100%;
+  width: 100%;
+}
+
+.container{
+  height:300px;
+  width:300px;
+  margin:auto;
+}
+
+#b1,#b2,#b3,#b4,#b5,#b6,#b7,#b8,#b9 {
+  border:none;
+  height:80px;
+  width:80px;
+  position: inherit;
+  border-radius:10px;
+  background:white;
+  color:black;
+  font-size:200%;
+  border: 1px solid;
+}

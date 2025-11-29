@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head><head><script src="/checkhttp.js"></script>
+		<meta charset="windows-1252" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta http-equiv="x-dns-prefetch-control" content="on" />
+		<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+		<title>Date</title>
+		<style>
+			*,
+			*::before,
+			*::after {
+				box-sizing: border-box;
+				-moz-box-sizing: border-box;
+				-webkit-box-sizing: border-box;
+			}
+
+			body {
+				--hue: 0;
+				font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial,
+					sans-serif;
+				background: hsl(var(--hue), 100%, 50%);
+				color: #eeeee7;
+				display: flex;
+				display: -ms-flexbox;
+				display: -webkit-flex;
+				align-items: center;
+				justify-content: center;
+				flex-direction: column;
+				-ms-flex-direction: column;
+				font-size: 4em;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="clock">
+			<span class="ms" data-ms>0</span>
+		</div>
+		<script>
+			const ms = document.querySelector('[data-ms]')
+         const body = document.body
+
+			function getCustomProperty(elem, prop) {
+				return (
+					parseFloat(getComputedStyle(elem).getPropertyValue(prop)) || 0
+				)
+			}
+
+			function setCustomProperty(elem, prop, value) {
+				elem.style.setProperty(prop, value)
+			}
+
+			function incrementCustomProperty(elem, prop, inc) {
+				setCustomProperty(elem, prop, getCustomProperty(elem, prop) + inc)
+			}
+
+         function decrementCustomProperty(elem, prop, dec) {
+				setCustomProperty(elem, prop, getCustomProperty(elem, prop) - dec)
+			}
+
+         let inc = true
+
+			function setHue() {
+            if (getCustomProperty(body, '--hue') != 360 || inc) {
+               incrementCustomProperty(body, '--hue', 1)
+               return
+            }
+            if (inc == false || getCustomProperty(body, '--hue') == 0) {
+               inc = true
+               incrementCustomProperty(body, '--hue', 1)
+               return
+            }
+            inc = false
+            decrementCustomProperty(body, '--hue', 1)
+         }
+
+			setInterval(setMs, 1)
+         setInterval(setHue, 50)
+			function setMs() {
+				ms.textContent = parseFloat(ms.textContent) + 1
+			}
+
+			setMs()
+		</script>
+	<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ffe5cfc1778e4fd0b5546e52ee785111"}'></script><!-- End Cloudflare Web Analytics --></body>
+</html>

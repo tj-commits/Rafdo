@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html>
+
+<head><head><script src="/checkhttp.js"></script>
+    <title>Notepad</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Rafdo Notepad is the best online notepad out there.">
+    <link rel="icon" href="favicon.ico">
+    <link href="https://fonts.cdnfonts.com/css/avenir" rel="stylesheet">
+    <link rel="stylesheet" href="css/app-new.css">
+    <link rel="stylesheet" href="css/icons.css">
+    <style>
+/* Sidebar */
+.sidebaar {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+  color: white;
+}
+
+.sidebaar a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidebaar a:hover {
+  color: #f1f1f1;
+}
+
+.sidebaar .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+.openbtn {
+  font-size: 20px;
+  cursor: pointer;
+  background-color: #111;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+}
+
+.openbtn:hover {
+  background-color: #444;
+}
+
+#main {
+  transition: margin-left .5s;
+  padding: 16px;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+  .sidebar {padding-top: 15px;}
+  .sidebar a {font-size: 18px;}
+}
+
+.openbtn {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  background: white;
+  color: black;
+  font-size: 30px;
+  outline: none;
+  border: none;
+}
+
+.openbtn:hover {
+  background: white;
+  color: black;
+}
+
+.brdcrumb {
+    text-transform: initial;
+    font-size: 15px;
+}
+
+.cb{
+    color: #6d9bff !important;
+}
+</style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <div class="navbar"> <a href="#" class="nav-btn" id="nav-btn"><i class="i-menu"></i></a>
+        <span class="brand">
+            <h1><a href="#" class="brdcrumb">Rafdo Notepad</a></h1>
+        </span>
+    </div>
+     <div id="mySidebar" class="sidebaar">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+      <h2 style="text-align:center;">RAFDO PRODUCTIVITY</h2>
+      <br>
+      <a href="#">Notepad</a>
+      <a href="/r2/tasks/">Tasks</a>
+    </div>
+    <div class="container">
+        <div class="mask"></div>
+        <div class="sidebar">
+            <div class="create">
+                <button id="new_btn" class="btn btn-lg" title="Create a new note">+ Create new</button>
+                </div>
+            <div class="search"> <i class="i-find"></i> <input type="text" id="n_search" class="search" placeholder="Search..." spellcheck="false"></div>
+            <div class="settings">
+                <ul class="menu more left">
+                    <li><a href="#" title="Sort notes"><i class="i-sort"></i></a>
+                        <ul>
+                            <li><a id="sortAZ" href="#"><i class></i> Alphabetical</a></li>
+                            <li><a id="sortNone" href="#"><i class="i-check"></i> Creation date</a></li>
+                            <li><a id="sortDate" href="#"><i class></i> Last modified</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="menu more right">
+                    <li><a href="#" title="Settings"><i class="i-ellipsis_v"></i></a>
+                        <ul>
+                            <li><a id="view_compact" href="#" id><i class="i-"></i> Compact View</a></li>
+                            <li><a id="view_all" href="#" id><i class="i-check"></i> Detailed View</a></li>
+                            <hr>
+                            <li><a id="backup_btn" href="#"><i class="i-download"></i> Backup</a></li>
+                            <li><a id="clear_btn" href="#"><i class="i-close"></i> Clear</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="saved-notes">
+                <ul class="notes"></ul>
+            </div>
+        </div>
+        <div class="editor">
+            <div class="editor-menu">
+                <ul class="menu">
+                    <li><a href="#">File</a>
+                        <ul>
+                            <li><a id="file_new" href="#"><i class="i-new"></i> New</a></li>
+                            <li> <input type="file" id="file_open" accept="text/plain" class="none"> <label for="file_open"><i class="i-open"></i> Open</label></li>
+                            <li><a id="file_save" href="#"><i class="i-save"></i> Save</a></li>
+                            <li><a id="file_download" href="#"><i class="i-download"></i> Save As</a></li>
+                            <hr>
+                            <li><a id="file_print" href="#"><i class="i-print"></i> Print</a></li>
+                        </ul>
+                    </li>
+                    <li class="stay-focus"><a href="#">Edit</a>
+                        <ul class="edit_btns">
+                            <li><a id="edit_undo" href="#"><i class="i-undo"></i> Undo</a></li>
+                            <li><a id="edit_redo" href="#"><i class="i-redo"></i> Redo</a></li>
+                            <hr>
+                            <li><a id="edit_cut" href="#"><i class="i-cut"></i> Cut</a></li>
+                            <li><a id="edit_copy" href="#"><i class="i-copy"></i> Copy</a></li>
+                            <li><a id="edit_del" href="#"><i class="i-close"></i> Delete</a></li>
+                            <li><a id="edit_sel" href="#"><i class="i-select"></i> Select All</a></li>
+                            <hr>
+                            <li><a id="edit_fnr" href="#"><i class="i-find"></i> Find & Replace</a></li>
+                        </ul>
+                    </li>
+                    <li class="stay-focus"><a href="#">Insert</a>
+                        <ul>
+                            <li><a id="ins_time" href="#"><i class="i-time"></i> Date/Time</a></li>
+                            <li><a id="ins_char" href="#"><i class="i-symbol"></i> Characters</a></li>
+                            <li><a id="ins_emo" href="#"><i class="i-emoji"></i> Emojis</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#">Format</a>
+                        <ul>
+                            <li><a id="isWrap" href="#"><i class="i-check"></i> Word Wrap</a></li>
+                            <li><a id="font_btn" href="#"><i class="i-format"></i> Font</a></li>
+                        </ul>
+                    </li>
+                    <li class="m-none"><a href="#">Tools</a>
+                        <ul>
+                            <li><a href="#" id="isSpell"><i class="i-check"></i> Spellcheck</a></li>
+                        </ul>
+                    </li>
+                    <li class="md-none"><a href="#">View</a>
+                        <ul>
+                            <li><a href="#" id="isStatus"><i class="i-check"></i> Status Bar</a></li>
+                            <li><a href="#" class="fullscreen_btn"><i id="winCheck" class></i> Full Screen</a></li>
+                        </ul>
+                    </li> <a href="#" title="Fullscreen mode" class="fullscreen_btn right md-none"><i id="winSize" class="i-fullscreen"></i></a></ul>
+            </div>
+            <div class="editor-head"> <input id="n_title" placeholder="Untitled Note" spellcheck="false"> <a href="#" id="del_btn" title="Delete"><i class="i-bin"></i></a></div>
+            <div class="editor-body"> <textarea id="n_text" spellcheck="true"></textarea></div>
+            <div class="editor-footer"> <span id="caretPos" class="left"></span> <span id="wordsNum" class="right">Words: 0</span></div>
+        </div>
+        <div class="adbox"> <a id="hide-sky" href="#"><i class="i-nav_next"></i></a>
+            <div id="sky">
+                <style>
+                    .ON_App{width:320px;height:100px}@media(min-width:470px){.ON_App{width:468px;height:100px}}@media(min-width:730px){.ON_App{width:728px;height:100px}}@media(min-width:752px){.ON_App{width:750px;height:100px}}@media(min-width:972px){.ON_App{width:970px;height:100px}}@media(min-width:993px){.ON_App{width:160px;height:600px}}@media(min-width:1366px){.ON_App{width:300px;height:250px}}
+                </style> <ins class="ON_App adsbygoogle" data-ad-client="ca-pub-2859608055830984" data-ad-slot="1960224538" style="display:inline-block"></ins>
+                <script>
+                    (adsbygoogle=window.adsbygoogle||[]).push({})
+                </script>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="find_replace">
+        <div class="modal-head"> <b>Find and replace</b> <span class="modal-x"><i class="i-close"></i></span></div>
+        <div class="modal-body">
+            <div class="form-group spacer-s"> <label class="w-30">Find this</label><input id="find_box" class="input w-70" value></div>
+            <div class="form-group spacer-s"> <label class="w-30">Replace with</label><input id="replace_box" class="input w-70" value></div>
+            <div class="clear"> <span class="checkbox w-70 right spacer-s"> <input type="checkbox" id="match_case"> <label for="match_case">Match case</label> </span> <span class="checkbox w-70 right"> <input type="checkbox" id="whole_words"> <label for="whole_words">Whole words</label> </span></div>
+        </div>
+        <div class="modal-foot clear">
+            <div class="right"> <button id="replaceall_btn" class="btn min-wid">Replace</button></div>
+        </div>
+    </div>
+    <div class="modal" id="char_list">
+        <div class="modal-head"> <b>Special Characters</b> <span class="modal-x"><i class="i-close"></i></span></div>
+        <div class="modal-body">
+            <ul class="charlist font-12" style="font-family:sans-serif">
+                <li>¢</li>
+                <li>€</li>
+                <li>£</li>
+                <li>¥</li>
+                <li>©</li>
+                <li>®</li>
+                <li>™</li>
+                <li>‰</li>
+                <li>µ</li>
+                <li>·</li>
+                <li>•</li>
+                <li>…</li>
+                <li>′</li>
+                <li>″</li>
+                <li>§</li>
+                <li>¶</li>
+                <li>ß</li>
+                <li>‹</li>
+                <li>›</li>
+                <li>«</li>
+                <li>»</li>
+                <li>‘</li>
+                <li>’</li>
+                <li>“</li>
+                <li>”</li>
+                <li>‚</li>
+                <li>„</li>
+                <li>
+                    <</li>
+                        <li>></li>
+                        <li>≤</li>
+                        <li>≥</li>
+                        <li>–</li>
+                        <li>—</li>
+                        <li>¯</li>
+                        <li>‾</li>
+                        <li>¤</li>
+                        <li>¦</li>
+                        <li>¨</li>
+                        <li>¡</li>
+                        <li>¿</li>
+                        <li>ˆ</li>
+                        <li>˜</li>
+                        <li>°</li>
+                        <li>−</li>
+                        <li>±</li>
+                        <li>÷</li>
+                        <li>⁄</li>
+                        <li>×</li>
+                        <li>¹</li>
+                        <li>²</li>
+                        <li>³</li>
+                        <li>¼</li>
+                        <li>½</li>
+                        <li>¾</li>
+                        <li>ƒ</li>
+                        <li>∫</li>
+                        <li>∑</li>
+                        <li>∞</li>
+                        <li>√</li>
+                        <li>∼</li>
+                        <li>≅</li>
+                        <li>≈</li>
+                        <li>≠</li>
+                        <li>≡</li>
+                        <li>∈</li>
+                        <li>∉</li>
+                        <li>∋</li>
+                        <li>∏</li>
+                        <li>∧</li>
+                        <li>∨</li>
+                        <li>¬</li>
+                        <li>∩</li>
+                        <li>∪</li>
+                        <li>∂</li>
+                        <li>∀</li>
+                        <li>∃</li>
+                        <li>∅</li>
+                        <li>∇</li>
+                        <li>∗</li>
+                        <li>∝</li>
+                        <li>∠</li>
+                        <li>´</li>
+                        <li>¸</li>
+                        <li>ª</li>
+                        <li>º</li>
+                        <li>†</li>
+                        <li>‡</li>
+                        <li>À</li>
+                        <li>Á</li>
+                        <li>Â</li>
+                        <li>Ã</li>
+                        <li>Ä</li>
+                        <li>Å</li>
+                        <li>Ā</li>
+                        <li>Æ</li>
+                        <li>Ç</li>
+                        <li>È</li>
+                        <li>É</li>
+                        <li>Ê</li>
+                        <li>Ë</li>
+                        <li>Ē</li>
+                        <li>Ì</li>
+                        <li>Í</li>
+                        <li>Î</li>
+                        <li>Ï</li>
+                        <li>Ī</li>
+                        <li>Ð</li>
+                        <li>Ñ</li>
+                        <li>Ò</li>
+                        <li>Ó</li>
+                        <li>Ô</li>
+                        <li>Õ</li>
+                        <li>Ö</li>
+                        <li>Ø</li>
+                        <li>Ō</li>
+                        <li>Œ</li>
+                        <li>Š</li>
+                        <li>Ù</li>
+                        <li>Ú</li>
+                        <li>Û</li>
+                        <li>Ü</li>
+                        <li>Ū</li>
+                        <li>Ý</li>
+                        <li>Ÿ</li>
+                        <li>Ȳ</li>
+                        <li>Þ</li>
+                        <li>à</li>
+                        <li>á</li>
+                        <li>â</li>
+                        <li>ã</li>
+                        <li>ä</li>
+                        <li>å</li>
+                        <li>ā</li>
+                        <li>æ</li>
+                        <li>ç</li>
+                        <li>è</li>
+                        <li>é</li>
+                        <li>ê</li>
+                        <li>ë</li>
+                        <li>ē</li>
+                        <li>ì</li>
+                        <li>í</li>
+                        <li>î</li>
+                        <li>ï</li>
+                        <li>ī</li>
+                        <li>ð</li>
+                        <li>ñ</li>
+                        <li>ò</li>
+                        <li>ó</li>
+                        <li>ô</li>
+                        <li>õ</li>
+                        <li>ö</li>
+                        <li>ø</li>
+                        <li>ō</li>
+                        <li>œ</li>
+                        <li>š</li>
+                        <li>ù</li>
+                        <li>ú</li>
+                        <li>û</li>
+                        <li>ü</li>
+                        <li>ū</li>
+                        <li>ý</li>
+                        <li>þ</li>
+                        <li>ÿ</li>
+                        <li>ȳ</li>
+                        <li>Α</li>
+                        <li>Β</li>
+                        <li>Γ</li>
+                        <li>Δ</li>
+                        <li>Ε</li>
+                        <li>Ζ</li>
+                        <li>Η</li>
+                        <li>Θ</li>
+                        <li>Ι</li>
+                        <li>Κ</li>
+                        <li>Λ</li>
+                        <li>Μ</li>
+                        <li>Ν</li>
+                        <li>Ξ</li>
+                        <li>Ο</li>
+                        <li>Π</li>
+                        <li>Ρ</li>
+                        <li>Σ</li>
+                        <li>Τ</li>
+                        <li>Υ</li>
+                        <li>Φ</li>
+                        <li>Χ</li>
+                        <li>Ψ</li>
+                        <li>Ω</li>
+                        <li>α</li>
+                        <li>β</li>
+                        <li>γ</li>
+                        <li>δ</li>
+                        <li>ε</li>
+                        <li>ζ</li>
+                        <li>η</li>
+                        <li>θ</li>
+                        <li>ι</li>
+                        <li>κ</li>
+                        <li>λ</li>
+                        <li>μ</li>
+                        <li>ν</li>
+                        <li>ξ</li>
+                        <li>ο</li>
+                        <li>π</li>
+                        <li>ρ</li>
+                        <li>ς</li>
+                        <li>σ</li>
+                        <li>τ</li>
+                        <li>υ</li>
+                        <li>φ</li>
+                        <li>χ</li>
+                        <li>ψ</li>
+                        <li>ω</li>
+                        <li>ℵ</li>
+                        <li>ϖ</li>
+                        <li>ℜ</li>
+                        <li>ϒ</li>
+                        <li>℘</li>
+                        <li>ℑ</li>
+                        <li>←</li>
+                        <li>↑</li>
+                        <li>→</li>
+                        <li>↓</li>
+                        <li>↔</li>
+                        <li>↵</li>
+                        <li>⇐</li>
+                        <li>⇑</li>
+                        <li>⇒</li>
+                        <li>⇓</li>
+                        <li>⇔</li>
+                        <li>∴</li>
+                        <li>⊂</li>
+                        <li>⊃</li>
+                        <li>⊄</li>
+                        <li>⊆</li>
+                        <li>⊇</li>
+                        <li>⊕</li>
+                        <li>⊗</li>
+                        <li>⊥</li>
+                        <li>⋅</li>
+                        <li>⌈</li>
+                        <li>⌉</li>
+                        <li>⌊</li>
+                        <li>⌋</li>
+                        <li>〈</li>
+                        <li>〉</li>
+                        <li>◊</li>
+                        <li>♠</li>
+                        <li>♣</li>
+                        <li>♥</li>
+                        <li>♦</li>
+            </ul>
+        </div>
+        <div class="modal-foot clear">
+            <div class="right"> <button class="ins_char_btn btn min-wid">Insert</button></div>
+        </div>
+    </div>
+    <div class="modal" id="emoji_list">
+        <div class="modal-head"> <b>Emojis</b> <span class="modal-x"><i class="i-close"></i></span></div>
+        <div class="modal-body">
+            <ul class="charlist font-14">
+                <li>😀</li>
+                <li>😁</li>
+                <li>😂</li>
+                <li>🤣</li>
+                <li>😃</li>
+                <li>😄</li>
+                <li>😅</li>
+                <li>😆</li>
+                <li>😉</li>
+                <li>😊</li>
+                <li>😋</li>
+                <li>😎</li>
+                <li>😍</li>
+                <li>😘</li>
+                <li>😗</li>
+                <li>😙</li>
+                <li>😚</li>
+                <li>☺️</li>
+                <li>🙂</li>
+                <li>🤗</li>
+                <li>🤩</li>
+                <li>🤔</li>
+                <li>🤨</li>
+                <li>😐</li>
+                <li>😑</li>
+                <li>😶</li>
+                <li>🙄</li>
+                <li>😏</li>
+                <li>😣</li>
+                <li>😥</li>
+                <li>😮</li>
+                <li>🤐</li>
+                <li>😯</li>
+                <li>😪</li>
+                <li>😫</li>
+                <li>😴</li>
+                <li>😌</li>
+                <li>😛</li>
+                <li>😜</li>
+                <li>😝</li>
+                <li>🤤</li>
+                <li>😒</li>
+                <li>😓</li>
+                <li>😔</li>
+                <li>😕</li>
+                <li>🙃</li>
+                <li>🤑</li>
+                <li>😲</li>
+                <li>☹️</li>
+                <li>🙁</li>
+                <li>😖</li>
+                <li>😞</li>
+                <li>😟</li>
+                <li>😤</li>
+                <li>😢</li>
+                <li>😭</li>
+                <li>😦</li>
+                <li>😧</li>
+                <li>😨</li>
+                <li>😩</li>
+                <li>🤯</li>
+                <li>😬</li>
+                <li>😰</li>
+                <li>😱</li>
+                <li>😳</li>
+                <li>🤪</li>
+                <li>😵</li>
+                <li>😡</li>
+                <li>😠</li>
+                <li>🤬</li>
+                <li>😷</li>
+                <li>🤒</li>
+                <li>🤕</li>
+                <li>🤢</li>
+                <li>🤮</li>
+                <li>🤧</li>
+                <li>😇</li>
+                <li>🤠</li>
+                <li>🤡</li>
+                <li>🤥</li>
+                <li>🤫</li>
+                <li>🤭</li>
+                <li>🧐</li>
+                <li>🤓</li>
+                <li>😈</li>
+                <li>👿</li>
+                <li>👹</li>
+                <li>👺</li>
+                <li>💀</li>
+                <li>👻</li>
+                <li>👽</li>
+                <li>🤖</li>
+                <li>💩</li>
+                <li>😺</li>
+                <li>😸</li>
+                <li>😹</li>
+                <li>😻</li>
+                <li>😼</li>
+                <li>😽</li>
+                <li>🙀</li>
+                <li>😿</li>
+                <li>😾</li>
+            </ul>
+        </div>
+        <div class="modal-foot clear">
+            <div class="right"> <button class="ins_char_btn btn min-wid">Insert</button></div>
+        </div>
+    </div>
+    <div class="modal" id="font_format">
+        <div class="modal-head"> <b>Font</b> <span class="modal-x"><i class="i-close"></i></span></div>
+        <div class="modal-body">
+            <div class="w-100 clear spacer-s">
+                <div class="w-50 left spacer-r"> <label>Font</label> <select id="font_family" class="select w-100" value size="5"><option value="inherit" selected>Default</option><option>Arial</option><option>Comic Sans MS</option><option>Courier New</option><option>Georgia</option><option>Helvetica</option><option>Impact</option><option value="Lucida Sans Unicode, Lucida Grande">Lucida</option><option>Microsoft Sans Serif</option><option value="Palatino Linotype, Palatino">Palatino</option><option>Tahoma</option><option>Times New Roman</option><option>Trebuchet MS</option><option>Verdana</option><option value="system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Ubuntu,Roboto,sans-serif">System font</option> </select></div>
+                <div class="w-50 right spacer-l"> <label>Size</label> <select id="font_size" class="select w-100" value size="5"><option>8pt</option><option>9pt</option><option>10pt</option><option selected>11pt</option><option>12pt</option><option>14pt</option><option>16pt</option><option>18pt</option><option>20pt</option><option>22pt</option><option>24pt</option><option>30pt</option><option>36pt</option><option>48pt</option><option>60pt</option><option>72pt</option> </select></div>
+            </div>
+            <div class="w-100 clear">
+                <div class="w-33 left spacer-r"> <label>Weight</label> <select id="font_weight" class="select w-100" value size="4"><option value="400" selected>Regular</option><option value="700">Bold</option> </select></div>
+                <div class="w-33 left spacer-l spacer-r"> <label>Style</label> <select id="font_style" class="select w-100" value size="4"><option selected>Normal</option><option>Italic</option> </select></div>
+                <div class="w-33 left spacer-l"> <label>Line space</label> <select id="font_line" class="select w-100" value size="4"><option value="1.25">Single</option><option value="1.4">1.15</option><option value="1.8" selected>1.5</option><option value="2.4">Double</option> </select></div>
+            </div>
+        </div>
+        <div class="modal-foot clear">
+            <div class="right"> <button id="reset_font" class="btn min-wid">Reset</button></div>
+        </div>
+    </div>
+    <div class="modal" id="about_app">
+        <div class="modal-head"> <b>About</b> <span class="modal-x"><i class="i-close"></i></span></div>
+        <div class="modal-body centered" style="border-bottom:0">
+            <h4>Online Notepad</h4>
+            <div class="font-12">
+                <p class>Version 2.0 (Build 1018)</p> <br/>
+                <p>Feel free to send comments, suggestions and bug reports to onlinenotepad.org@gmail.com. I'll try to implement it if it's feasible.</p> <br/> <span>Copyright © 2018</span></div>
+        </div>
+    </div>
+    <div class="modal" id="confirm">
+        <div class="modal-head"> <b>Confirm</b> <span class="modal-x"><i class="i-close"></i></span></div>
+        <div class="modal-body">
+            <p></p>
+        </div>
+        <div class="modal-foot clear">
+            <div class="right"> <button class="confirm-1 btn min-wid"></button> <button class="confirm-2 btn min-wid"></button></div>
+        </div>
+    </div>
+    <div class="toast" role="alert">
+        <div class="toast-content">
+        </div>
+        <button class="close-toast">Dismiss</button>
+    </div>
+    <div class="mob-mask"></div>
+    <p id="print" class="none"></p>
+    <script src="js/app-new.js"></script>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+        
+function openNav() {
+  document.getElementById("mySidebar").style.width = "250px";
+  document.getElementById("main").style.marginLeft = "250px";
+}
+
+function closeNav() {
+  document.getElementById("mySidebar").style.width = "0";
+  document.getElementById("main").style.marginLeft= "0";
+}
+</script>
+<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ffe5cfc1778e4fd0b5546e52ee785111"}'></script><!-- End Cloudflare Web Analytics --></body>
+
+</html>

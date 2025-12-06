@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="/games/imgquest/ife/auralink.js"></script>
+    
+    <title>Secret Quest Complete</title>
+</head>
+<body>
+    <h1>You finished a secret quest</h1>
+    <p>you finished a secret quest and unlocked 1 new image!</p>
+    <img src="/games/imgquest/help.png" alt="how can we help you">
+
+    <button id="gallery-button" style="display: none">Go to gallery</button>
+    
+    <script>
+        const galleryButton = document.getElementById('gallery-button')
+
+        window.CloudStorage.waitForLoad().then(() => {
+            window.CloudStorage.setItem('gallery:help', 'mhm')
+
+            galleryButton.addEventListener('click', () => {
+                galleryButton.disabled = true
+                window.CloudStorage.syncBeforeRedirect().then(() => {
+                    location.assign('/games/imgquest/gallery.html')
+                }).catch(error => {
+                    console.error("Error during cloud sync before redirect:", error)
+                    location.assign('/games/imgquest/gallery.html') 
+                })
+            })
+
+            galleryButton.style.display = 'block'
+
+        }).catch(error => {
+            console.error("Error waiting for CloudStorage to load:", error)
+            
+            galleryButton.addEventListener('click', () => {
+                location.assign('/games/imgquest/gallery.html')
+            })
+            galleryButton.style.display = 'block'
+        })
+    </script>
+</body>
+</html>

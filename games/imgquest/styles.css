@@ -1,0 +1,64 @@
+/* Place your CSS styles in this file */
+
+
+
+body {
+  text-align: center;
+  z-index: 99999999999999;font-family: 'SUSE', sans-serif
+}
+
+.completed{
+    text-decoration: line-through!important;
+    color: black !important;
+}
+
+
+sub{
+    font-size: 15px;
+}
+.finished {
+    text-decoration: line-through !important;
+    color: black !important;
+}
+
+a[href] {
+    color: blue
+}
+
+a:not([href]) {
+    text-decoration: underline
+}
+
+.locked {
+    color: red;
+    font-weight: bolder;
+    font-size: 15px;
+}
+
+.green {
+    color: green;
+    text-decoration: none;
+}
+
+
+        button {
+            padding: 10px;
+            border: none;
+            outline: none;
+            background: #333;
+            color: white;
+            font-family: sans-serif;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 200ms ease-in-out;
+            /*margin-right: 5px;*/
+            min-width: 5em;
+        }
+        
+        
+        
+        
+        
+        button:hover {
+            background: #5a5a5a
+        }

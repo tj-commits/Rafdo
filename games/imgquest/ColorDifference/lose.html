@@ -1,0 +1,14 @@
+ <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+
+<h1>Incorrect!!!!!</h1>
+<button id="so">Start over</button>
+<script>
+    var so = document.getElementById('so')
+    var par = new URLSearchParams(location.search)
+    var f = par.get('from')
+    so.onclick = function() {
+        location.assign(`/games/imgquest/ColorDifference/${f}`)
+    }
+</script>

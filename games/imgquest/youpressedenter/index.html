@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+<head>
+    <title>ImageQuest</title>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="/games/imgquest/ife/auralink.js"></script>
+</head>
+<body>
+    <h1>WAT!?!?!?!?!!</h1>
+    <p> Uh huh! Dass right! You just unlocked a secret ImageQuest quest.</p>
+    <p>This is the image you got:</p>
+    <img src="/games/imgquest/youpressedenter/duplicatefile.jpg" alt="you pressed enter" />
+    <p>if you don't know what imagequest is, it's just a game where you do random things to get images. if you just want to play Guess The Word(s), and found that weird easter egg, then <a href="/games/guesstheword/">just go back to that game.</a>.</p>
+
+    <button id="gallery-button" style="display: none">go to Imagequest gallery</button>
+    
+    <script>
+        const galleryButton = document.getElementById('gallery-button')
+
+        window.CloudStorage.waitForLoad().then(() => {
+            window.CloudStorage.setItem('gallery:enter', 'mhm')
+
+            galleryButton.addEventListener('click', () => {
+                galleryButton.disabled = true
+                window.CloudStorage.syncBeforeRedirect().then(() => {
+                    location.assign('/games/imgquest/gallery.html')
+                }).catch(error => {
+                    console.error("Error during cloud sync before redirect:", error)
+                    location.assign('/games/imgquest/gallery.html') 
+                })
+            })
+
+            galleryButton.style.display = 'block'
+
+        }).catch(error => {
+            console.error("Error waiting for CloudStorage to load:", error)
+            
+            galleryButton.addEventListener('click', () => {
+                location.assign('/games/imgquest/gallery.html')
+            })
+            galleryButton.style.display = 'block'
+        })
+    </script>
+    <script src="/games/imgquest/script.js"></script>
+</body>
+</html>

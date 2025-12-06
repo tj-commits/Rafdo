@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="pinterest" content="nopin">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+
+    <script src="/games/imgquest/ife/client.js"></script>
+  
+    <style>
+        body {
+            z-index: 99999999999999999;
+        }
+        /* New style for the saving message */
+        #saving-message {
+            color: yellow;
+            background: black;
+            padding: 10px;
+            font-weight: bold;
+        }
+        /* Style to hide the button initially */
+        #gallery-button {
+            display: none;
+        }
+    </style>
+  <title>ImageQuest </title>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    
+    <script src="/games/imgquest/ife/auralink.js"></script>
+</head>
+<body>
+  <h1>LOLLLL</h1>
+  <p>GET TOEROLLLLED</p>
+  <p>2 New Images unlocked: Gross Foot and Cute cat</p>
+  
+  <p id="saving-message">Saving progress, please wait...</p>
+  <button id="gallery-button"><a href="/games/imgquest/gallery.html">GO TO GALLERY</a></button><br>
+  
+  <img src="toe.png" alt="A gross foot" width="500" height="500">
+  <script>
+  const toe = document.querySelector("img")
+         if (localStorage.getItem("settingid:toe") == 1 ||localStorage.getItem("settingid:toe") == "1" ) {
+              toe.src = "toe_removed.jpeg"
+            toe.alt = "this used to be a gross foot, but it's censored, so it just has text that says CENSORED: GROSS FOOT."
+        } else{
+            
+         toe.src = "toe.png" }
+
+const saveAndShowButton = async () => {
+    const message = document.getElementById('saving-message');
+    const button = document.getElementById('gallery-button');
+    message.style.display = 'block';
+    button.style.display = 'none';
+
+    window.CloudStorage.setItem("gallery:toe", "mhm");
+    window.CloudStorage.setItem("gallery:cute-cat", "mhm");
+
+    await window.CloudStorage.syncBeforeRedirect();
+
+    message.style.display = 'none';
+    button.style.display = 'block';
+};
+
+CloudStorage.waitForLoad().then(() => {
+saveAndShowButton()
+});
+
+
+</script>
+</body>
+</html>

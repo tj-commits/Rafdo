@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    
+    <script src="/games/imgquest/ife/auralink.js"></script>
+    <title>ImageQuest CLICKIT</title>
+    <style>
+        body {
+            z-index: 99999999999999999;
+        }
+      #mole
+{
+    position: relative;
+    z-index: 2;  
+    color: red;
+    font-size: 20px;
+}
+
+.tab {
+    color: white;
+    background: black;
+    font-weight: bolder;
+    cursor: pointer;
+}
+/* New style for the saving message */
+#saving-message {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: yellow;
+    padding: 20px;
+    font-size: 24px;
+    border: 3px solid yellow;
+    z-index: 100000; /* Ensure it is on top */
+    display: none; /* Hidden by default */
+}
+    </style>
+  </head>
+  <body style="background-image: url('/games/imgquest/CLICKIT/CRICKIT.png'); background-blend-mode: multiply">
+  <p><strong>CLICKIT</strong></p>
+  <button id="giveup" onclick="doSaveAndRedirect()">i give up</button>
+    <button
+      id="mole"
+      onclick="doSaveAndRedirect()"
+    
+    >
+      <strong>CLICK ME</strong>
+    </button>
+    
+    <div id="saving-message">
+        PLEASE WAIT... SAVING DATA! DO NOT CLOSE THE PAGE!!!
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" defer>
+    // Thanks to Joe Pea on JSFiddle for writing the original script!! (which i modified and added stuff to)
+    const msg = "Tabbing over and pressing the button will not work. If you are keyboard only, wait 30 seconds until the give up button appears, then tab over to it. Tabbing will be enabled again. The give up button just lets you finish the quest anyway. Click this message to close it."
+     let mole = $("#mole")
+
+     var NINE = 9
+     
+ let molereal = document.querySelector('#mole')
+ let howManyTimesPressedTab = 0
+$(document).ready(function() {
+
+ let giveup = document.querySelector('#giveup')
+ giveup.style.display = "none"
+
+
+
+ document.addEventListener('keydown', stopTab)
+
+    mole.on('mouseenter', nope)
+    // NOTE: jQuery handler now calls the single function doSaveAndRedirect
+    mole.on('click', function() {
+        doSaveAndRedirect();
+    })
+
+    molereal.addEventListener('focus', () => {
+        molereal.blur()
+    })
+    
+    setTimeout(function() {
+        giveup.style.display = 'block'
+        document.removeEventListener('keydown', stopTab)
+    }, 30000)
+})
+
+async function doSaveAndRedirect() {
+    // 1. Disable buttons to prevent multiple clicks
+    document.getElementById('giveup').disabled = true;
+    document.getElementById('mole').disabled = true;
+    
+    // 2. Show the waiting message
+    document.getElementById('saving-message').style.display = 'block';
+
+    // 3. Update localStorage and then wait for the cloud sync promise
+    CloudStorage.setItem('gallery:crickit', 'mhm');
+    CloudStorage.setItem('gallery:what', 'mhm');
+    
+    // The CloudStorage.setItem call starts the debounced save, 
+    // but CloudStorage.syncBeforeRedirect clears the debounce and runs the save immediately and returns a Promise.
+    await CloudStorage.syncBeforeRedirect(); 
+
+    // 4. Hide the message (though the redirect happens instantly after)
+setTimeout(`
+    document.getElementById('saving-message').style.display = 'none';
+
+    // 5. Redirect after the save is complete
+    location.assign('/games/imgquest/CLICKIT/uwot.html');`, 10)
+}
+
+
+function nope() {
+    let randX = Math.floor(Math.random() * (window.innerWidth - 100))
+    let randY = Math.floor(Math.random() * (window.innerHeight - 100))
+    console.log([randX, randY])
+    mole.stop().animate({"left": randX + "px", "top": randY + "px"})
+
+}
+
+function stopTab(event) {
+if (event.keyCode == NINE) {
+    event.preventDefault()
+    console.log('Nope')
+
+    const tab = document.createElement('p')
+    tab.classList.add('tab')
+    tab.textContent = msg
+    tab.addEventListener('click', () => {
+        tab.remove()
+    })
+    document.body.append(tab)
+  }
+}
+        </script>
+  </body>
+</html>

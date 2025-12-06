@@ -1,0 +1,20 @@
+User-agent: *
+
+Disallow: /morehelp
+Disallow: /morehelp123
+Disallow: /2048/
+Disallow: /66b/
+Disallow: /bruh/
+Disallow: /CLICKIT/
+Disallow: /clickthecat/
+Disallow: /ColorDifference/
+Disallow: /dragonfly_eyeballs/
+Disallow: /mission301/
+Disallow: /obfuscation/
+Disallow: /quiz/
+Disallow: /sub/
+Disallow: /youpressedenter/
+Disallow: /morehelp737
+Disallow: /⬛
+Disallow: /no.txt
+Disallow: /sufferMovie/

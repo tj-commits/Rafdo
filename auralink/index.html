@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AuraLink by Rafdo - Integrated App Suite</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        /* Modern CSS Reset and Layout */
+        :root {
+            --color-primary: #1e3a8a; /* Deep Indigo/Blue */
+            --color-secondary: #3b82f6; /* Lighter Blue Accent */
+            --color-success: #10b981; /* Teal for success/buttons */
+            --color-text-dark: #374151;
+            --color-text-light: #f3f4f6;
+            --color-bg-light: #f9fafb;
+            --color-bg-dark: #1f2937; /* Dark background for sections */
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--color-bg-light);
+            color: var(--color-text-dark);
+            min-height: 100vh; 
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Main Content Wrapper (pushes footer down) */
+        .content-wrap {
+            flex-grow: 1;
+        }
+
+        /* 1. Header & Hero Section */
+        .header {
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            color: var(--color-text-light);
+            padding: 60px 20px 80px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 0 0 10px 0;
+            font-size: 3.5em;
+            font-weight: 800;
+            letter-spacing: -1px;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .header p {
+            font-size: 1.3em;
+            opacity: 0.9;
+            margin-bottom: 30px;
+            animation: fadeInUp 1s ease-out 0.3s forwards;
+            opacity: 0;
+        }
+
+        /* 2. Authentication Buttons */
+        .auth-container {
+            margin-top: 30px;
+        }
+
+        .auth-button {
+            background-color: var(--color-success);
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            margin: 0 10px;
+            cursor: pointer;
+            border-radius: 50px;
+            font-size: 1.1em;
+            font-weight: 600;
+            transition: all 0.3s ease; 
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .auth-button:hover {
+            background-color: #059669; 
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        #authMessage {
+            color: #ffcc00; 
+            margin-top: 15px;
+            font-weight: 600;
+        }
+
+        /* 3. App Suite Section */
+        .app-suite {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .app-suite h2 {
+            font-size: 2.5em;
+            font-weight: 800;
+            margin-bottom: 50px;
+            color: var(--color-primary);
+        }
+
+        .app-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+        }
+
+        /* 4. App Cards (Single Card Centered) */
+        .app-card {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            text-align: left;
+            border: 1px solid #e5e7eb;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            max-width: 400px; /* Limit width for single card aesthetic */
+            margin: 0 auto; /* Center the single card */
+        }
+
+        .app-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(var(--color-secondary), 0.3);
+            border-color: var(--color-secondary);
+        }
+
+        .app-card h3 {
+            color: var(--color-primary);
+            margin-top: 0;
+            font-size: 1.8em;
+            font-weight: 800;
+        }
+
+        .app-card p {
+            color: var(--color-text-dark);
+            line-height: 1.6;
+        }
+        
+        .app-card a {
+            color: var(--color-secondary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+            margin-top: 15px;
+            display: inline-block;
+        }
+
+        .app-card a:hover {
+            color: var(--color-primary);
+            text-decoration: underline;
+        }
+
+
+        /* 5. Footer (Sticky) */
+        .footer {
+            padding: 30px 20px;
+            background-color: var(--color-bg-dark);
+            color: var(--color-text-light);
+            font-size: 0.9em;
+            text-align: center;
+        }
+        
+        /* Keyframe Animations */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="content-wrap">
+        <div class="header">
+            <h1>AuraLink by Rafdo</h1>
+            <p>AuraLink is one account for everything Rafdo that you need to sync. STILL IN ALPHA. BUGS MAY EXIST. NOT MANY APPS SUPPORTED YET</p>
+            <div class="auth-container">
+                <button class="auth-button" onclick="location.replace('/auralink/dashboard.html')">Go to Dashboard</button>
+                <p id="authMessage"></p>
+            </div>
+        </div>
+    
+        <div class="app-suite">
+            <h2>Apps that support (or require) AuraLink</h2>
+            <div class="app-grid">
+                
+                <div class="app-card">
+                    <div>
+                        <h3>Rafdo Notepad</h3>
+                        <p>An online notepad app for quick thoughts and secure notes. Always synchronized.</p>
+                    </div>
+                    <a href="/r2/notepad/">Visit Rafdo Notepad →</a>
+                </div>
+                  <div class="app-card">
+                    <div>
+                        <h3>ImageQuest</h3>
+                        <p>A cool game part of Rafdo Games where you complete quests to unlock images in your gallery.</p>
+                    </div>
+                    <a href="/imagequest.html">Play ImageQuest →</a>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        &copy; 2025 AuraLink. All rights reserved.
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+</body>
+</html>

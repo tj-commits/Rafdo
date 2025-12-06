@@ -1,0 +1,21 @@
+
+  <meta charset="utf-8" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+
+  <script>
+      function getSecretKeyPasswore(string) {
+        if (string === 'bruh') {
+            return "24124124612476176129504ABCDE66BAES3235"
+        } else {
+            return "fart"
+        }
+      }
+      const SECRET = getSecretKeyPasswore('bruh')
+      if (new URLSearchParams(window.location.search).get('keypassword') === SECRET) {
+        location.replace("http://feedbackb.66ghz.com/24124124612476176129504ABCDE66BAES3235.htm")
+      } else {
+          location.replace("https://fakebsod.com/generic")
+      }
+      </script>

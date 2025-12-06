@@ -1,0 +1,23 @@
+<meta
+  http-equiv="Cache-Control"
+  content="no-cache, no-store, must-revalidate"
+/>
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" /><script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    
+    <script src="/games/imgquest/ife/auralink.js"></script>
+
+<h1>Quiz finished</h1>
+<p>You got <span id="number">0</span> questions right, and have unlocked two new images!</h1>
+<button onclick="location.assign('/games/imgquest/gallery.html')">Go to gallery</button><br>
+<img src="/games/imgquest/quiz/quiz.jpg" alt="Quiz image" width="300">
+<img src="/games/imgquest/quiz/itsquiztime.webp" width="200" alt="Image that says quiz time">
+<script>
+    let n = document.getElementById('number')
+    let p = new URLSearchParams(location.search)
+    let correct = p.get('correct')
+    n.textContent = correct
+   window.CloudStorage.setItem('gallery:quiz', 'mhm')
+</script>

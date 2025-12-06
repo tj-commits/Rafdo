@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="windows-1252" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" /><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    
+    <script src="/games/imgquest/ife/auralink.js"></script>
+    <script src="/games/imgquest/ife/client.js"></script>
+<meta http-equiv="Expires" content="0" />
+    <style>
+        /* --- NEW GLOBAL STYLES FOR BETTER LOOK AND LAYOUT --- */
+        body {
+            /* Your required z-index */
+            z-index: 99999999999999999; 
+            /* Aesthetics and Layout */
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f5; /* Light grey/blue background */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #8c2828; /* Deep red underline */
+            padding-bottom: 10px;
+            max-width: 80%;
+        }
+
+        img {
+            max-width: 90%;
+            height: auto;
+            border: 6px solid #fff;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        button {
+            background-color: #8c2828; /* Deep red color for the button */
+            color: white;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        button:hover {
+            background-color: #a33838;
+            transform: translateY(-2px);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        /* Your existing styles (kept exactly as requested) */
+        #data{
+            color:red; 
+            font-size: xx-large
+        }
+    </style>
+    <title>ImageQuest Eight Match</title>
+  </head>
+  <body>
+    <h1>You matched the eight! You unlocked this image:</h1>
+    <img src="eight.jpeg" alt="An 8 and there's text that says it's you, and then ok maybe not really">
+    <button onclick="location.assign('/games/imgquest/gallery.html')" style="display:none;">Data saved. Click here to go to the gallery</button>
+    <p id=data data-data>Saving data... Do not leave the page</p>
+    <script>
+  CloudStorage.waitForLoad().then(function() {
+        window.CloudStorage.setItem('eight', 'mhm')
+
+
+
+CloudStorage.syncBeforeRedirect().then(function(){document.querySelector('#data').style.display = 'none'
+document.querySelector('button').style.display = 'block'})})
+    </script>
+  </body>
+</html>

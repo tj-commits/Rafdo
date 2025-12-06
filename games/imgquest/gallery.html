@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <script src="/games/imgquest/ife/client.js"></script>
+  <meta http-equiv="Expires" content="0" />
+  <title>ImageQuest Gallery</title>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+  <script src="/games/imgquest/ife/auralink.js"></script>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* NEW STYLES FOR LOADING SCREEN */
+    #loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #111;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 24px;
+      z-index: 9999999;
+    }
+
+    #gallery-content {
+      display: none;
+      /* Hide main content initially */
+    }
+
+    /* END NEW STYLES */
+
+    #bigtoe {
+      cursor: pointer;
+    }
+
+    /* The Modal (background) */
+    .modal {
+      display: none;
+      /* Hidden by default */
+      position: fixed;
+      /* Stay in place */
+      z-index: 1;
+      /* Sit on top */
+      left: 0;
+      top: 0;
+      width: 100%;
+      /* Full width */
+      height: 100%;
+      /* Full height */
+      overflow: auto;
+      /* Enable scroll if needed */
+      background-color: rgb(0, 0, 0);
+      /* Fallback color */
+      background-color: rgba(0, 0, 0, 0.4);
+      /* Black w/ opacity */
+    }
+
+    /* Modal Content/Box */
+    .modal-content {
+      background-color: #fefefe;
+      margin: 15% auto;
+      /* 15% from the top and centered */
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+      /* Could be more or less, depending on screen size */
+    }
+
+    /* The Close Button */
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    /* The snackbar - position it at the bottom and in the middle of the screen */
+    #snackbar {
+      visibility: hidden;
+      /* Hidden by default. Visible on click */
+      min-width: 250px;
+      /* Set a default minimum width */
+      margin-left: -125px;
+      /* Divide value of min-width by 2 */
+      background-color: #333;
+      /* Black background color */
+      color: #fff;
+      /* White text color */
+      text-align: center;
+      /* Centered text */
+      border-radius: 2px;
+      /* Rounded borders */
+      padding: 16px;
+      /* Padding */
+      position: fixed;
+      /* Sit on top of the screen */
+      z-index: 1;
+      /* Add a z-index if needed */
+      left: 50%;
+      /* Center the snackbar */
+      bottom: 30px;
+      /* 30px from the bottom */
+      font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto, Helvetica Neue, sans-serif;
+    }
+
+    /* Show the snackbar when clicking on a button (class added with JavaScript) */
+    #snackbar.show {
+      visibility: visible;
+      /* Show the snackbar */
+      /* Add animation: Take 0.5 seconds to fade in and out the snackbar.
+  However, delay the fade out process for 2.5 seconds */
+      -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+      animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    }
+
+    /* Animations to fade the snackbar in and out */
+    @-webkit-keyframes fadein {
+      from {
+        bottom: 0;
+        opacity: 0;
+      }
+
+      to {
+        bottom: 30px;
+        opacity: 1;
+      }
+    }
+
+    @keyframes fadein {
+      from {
+        bottom: 0;
+        opacity: 0;
+      }
+
+      to {
+        bottom: 30px;
+        opacity: 1;
+      }
+    }
+
+    @-webkit-keyframes fadeout {
+      from {
+        bottom: 30px;
+        opacity: 1;
+      }
+
+      to {
+        bottom: 0;
+        opacity: 0;
+      }
+    }
+
+    @keyframes fadeout {
+      from {
+        bottom: 30px;
+        opacity: 1;
+      }
+
+      to {
+        bottom: 0;
+        opacity: 0;
+      }
+    }
+
+    #easteregg {
+      display: none;
+    }
+
+
+    #home {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+    }
+
+    button {
+      padding: 10px;
+      border: none;
+      outline: none;
+      background: #333;
+      color: white;
+      font-family: sans-serif;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: 200ms ease-in-out;
+      /*margin-right: 5px;*/
+      min-width: 5em;
+      font-size: 18.2px;
+
+    }
+
+
+
+
+
+    button:hover {
+      background: #5a5a5a
+    }
+  </style>
+</head>
+
+<body>
+  <div id="loading-overlay">
+    Loading, please wait...
+  </div>
+
+  <div id="gallery-content">
+    <p id="easteregg"></p><br>
+    <div id="snackbar">snackbar text. </div>
+    <div id="myModal" class="modal">
+
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <p id="gplrandomfortune">Your fortune is: <span id="randomfortune">ERROR: the fortune did not load</span></p>
+      </div>
+
+    </div>
+
+  </div>
+  <button onclick="location.assign('./discover.html')" id="home">Back home &larr;</button>
+  <img src="/games/imgquest/dragonfly_eyeballs/cat.png" width="500" height="300" id="cat" alt="A cute cat.">
+  <img src="/games/imgquest/dragonfly_eyeballs/toe.png" width="500" height="500" title="Click to see your fortune!" alt="A gross foot."
+    style="cursor: pointer;" data-toe id="bigtoe">
+  <div class="toe" id="bigtoe"></div>
+
+  <script>
+    // WAIT FOR CLOUD DATA LOAD BEFORE SHOWING CONTENT
+    window.CloudStorage.waitForLoad().then(() => {
+      document.getElementById('loading-overlay').style.display = 'none'
+      document.getElementById('gallery-content').style.display = 'block'
+      console.log("Gallery page unlocked after cloud data check.")
+
+      // --- START ORIGINAL GALLERY LOGIC HERE ---
+
+      var cat = document.getElementById('cat')
+      cat.style.cursor = 'pointer'
+      let toeCensored = false
+      function check(nameofimage) {
+        return localStorage.getItem(nameofimage) != null
+      }
+      if (!check("gallery:cute-cat")) {
+        cat.remove()
+      }
+      if (localStorage.getItem('settingid:toe') === "1") {
+        var toe = document.querySelector('[data-toe]')
+        toe.src = "/games/imgquest/dragonfly_eyeballs/gross foot.jpg"
+        toe.alt = "This was a gross foot, but foot censoring is enabled, so it's just text that says CENSORED GROSS FOOT. "
+        toeCensored = true
+      }
+      if (!check("gallery:toe")) {
+
+        var toe = document.querySelector('[data-toe]')
+        toe.remove()
+        console.log('no toe')
+        var textthing = document.createElement('h3')
+        textthing.textContent = "Your gallery is empty cuz you haven't completed any quests yet."
+        document.body.append(textthing)
+        console.log('empty')
+      }
+
+
+      let rand = randomIntFromInterval(0, 5)
+      console.log(rand)
+      if (rand === 2 && !toeCensored && (document.querySelector('[data-toe]') != null)) {
+        const easteregg = document.getElementById('easteregg')
+        easteregg.innerText = 'Fun fact: If you click on the foot, it will tell you your fortune.'
+        easteregg.style.display = 'block'
+      }
+
+      if (check("gallery:what")) {
+        let wot = document.createElement("img")
+        wot.src = "/games/imgquest/CLICKIT/uwot.png"
+        wot.alt = "An image that just has a line of text that reads \"what\""
+        document.body.append(wot)
+        console.log("whattt")
+      }
+
+      if (check("gallery:crickit")) {
+        let crickiet897 = document.createElement("img")
+        crickiet897.src = "/games/imgquest/CLICKIT/CRICKIT.png"
+
+        crickiet897.style.cursor = "pointer"
+        crickiet897.id = "crickettt"
+        crickiet897.alt = "A cricket"
+
+        document.body.append(crickiet897)
+        var thecricket = document.getElementById('crickettt')
+
+        console.log("crickit")
+        ///handleCricket(crickiet897)
+      }
+      if (check("eight", true)) {
+        var you = document.createElement("img")
+        you.src = "/games/imgquest/mission301/eight.jpeg";
+you.alt = "an image of an 8, but there's text that says \"you\", and the text is pointing at the eight, but below the eight, there's text that says \"okay, maybe not really\""
+        document.body.append(you)
+        console.log("eight-ified")
+      }
+      if (check("gallery:fox")) {
+        var fox = document.createElement('img')
+        fox.src = "/games/imgquest/bruh/fox-explaining.png"
+        fox.style.cursor = "pointer"
+        fox.alt = "Image of a kid named Fox, who is the creator of this website, trying to explain something"
+
+        var fox2 = document.createElement('img')
+        fox2.src = "/games/imgquest/bruh/fox-mad.png"
+fox2.alt = "Image of a kid named Fox, who is the creator of this website, but really mad"
+
+        document.body.append(fox, fox2)
+        console.log('yes.')
+
+      }
+      if (check("gallery:colorDifferenceEasy")) {
+        var easy = document.createElement('img')
+        easy.src = "/games/imgquest/ColorDifference/Easy.jpg"
+        document.body.append(easy)
+        console.log('easy color difference')
+      }
+      console.log('e')
+      if (check("gallery:colorDifferenceHard")) {
+        var hard = document.createElement('img')
+        hard.src = "/games/imgquest/ColorDifference/Hard.jpg"
+        document.body.append(hard)
+        console.log('hard color difference')
+      }
+
+      if (check('gallery:thekittycollection')) {
+        console.log('me')
+        var bitsy = document.createElement('img')
+        var george = document.createElement('img')
+        var daorangecat = document.createElement('img') //ginger
+        var dabigspraya = document.createElement('img')//lester
+        var dagoose = document.createElement('img')//lucy
+        var damartmart = document.createElement('img')//marty
+        var daminniekittie = document.createElement('img')//minnie kitty
+        var daernesto = document.createElement('img')//nesto
+        var feebs = document.createElement('img')//phoebe
+        var dadawg = document.createElement('img')//rosie
+
+        bitsy.src = "/games/imgquest/petimages/bitsy.jpg"
+        george.src = "/games/imgquest/petimages/george.jpg"
+        daorangecat.src = "/games/imgquest/petimages/ginger.jpg"
+        dabigspraya.src = "/games/imgquest/petimages/lester.jpg"
+        dagoose.src = "/games/imgquest/petimages/lucy.jpg"
+        damartmart.src = "/games/imgquest/petimages/marty.jpg"
+        daminniekittie.src = "/games/imgquest/petimages/minnie-kitty.jpg"
+        daernesto.src = "/games/imgquest/petimages/nesto.jpg"
+        feebs.src = "/games/imgquest/petimages/phoebe.jpg"
+        dadawg.src = "/games/imgquest/petimages/rosie.jpg"
+        let array = [
+          bitsy, george, daorangecat, dabigspraya, dagoose, damartmart, daminniekittie, daernesto, feebs, dadawg
+        ]
+        array.forEach((catordog) => {
+
+          catordog.style.cursor = 'pointer'
+          if (catordog == dadawg) {
+            catordog.classList.add('dog')
+          } else {
+
+            catordog.classList.add('kittycatkittycatkitty')
+          }
+          catordog.setAttribute('width', '200')
+          document.body.append(catordog)
+        })
+        console.log('meow times 9. woof times 1')
+      }
+
+      // if (check('gallery:subbed')) {
+      //   let xxaxxexXaxxexIxaxe = document.createElement('img')
+      //   xxaxxexXaxxexIxaxe.src = "/games/imgquest/sub/chanelbaner.jpg"
+      //   xxaxxexXaxxexIxaxe.width = '500'
+      //   document.body.append(xxaxxexXaxxexIxaxe)
+      //   console.log('Xxe uxex xax xuxxxxixex.')
+      // }
+
+      if (check('gallery:quiz')) {
+        let quizimage1 = document.createElement('img')
+        quizimage1.src = "/games/imgquest/quiz/quiz.jpg"
+        //quizimage1.width = 300
+        let quizimg2 = document.createElement('img')
+        quizimg2.src = '/quiz/itsquiztime.webp'
+        quizimg2.width = 1000
+
+        document.body.append(quizimage1)
+        document.body.append(quizimg2)
+      }
+
+
+      if (check('gallery:hacker')) {
+        var _101001010 = document.createElement('img')
+        _101001010.src = "/games/imgquest/obfuscation/hackercode.jpg"
+        _101001010.width = 500
+        document.body.append(_101001010)
+        console.log('Fornite skin changer fr33 robuks hacker virus rogue trick')
+      }
+
+      if (check("gallery:rollwithitbru")) {
+        var astley = document.createElement('img')
+        astley.src = "/games/imgquest/obfuscation/rick-roll-deal-with-it.gif"
+        document.body.append(astley)
+        console.log('rick astley rollin')
+      }
+      /// IMAGES FROM BONUS QUEST//////
+      /////
+      if (check("gallery:feedback")) {
+        let hi = document.createElement('h1')
+        hi.innerText = 'Images from bonus quests'
+        hi.style.fontSize = "50px"
+        var feedback = document.createElement('img')
+        feedback.src = "/games/imgquest/66b.jpg"
+        document.body.innerHTML += "<hr>"
+        document.body.append(hi)
+        document.body.append(feedback)
+        console.log('feedback 66b')
+      }
+      if (check("gallery:extremelyhard")) {
+        for (var i = 0; i < 1; i++) {
+
+          var imabutton = document.createElement('img')
+          imabutton.src = "/games/imgquest/hard/imabutton.png"
+          imabutton.width = "300"
+          document.body.append(imabutton)
+          console.log('our user IS A GOD!!!')
+        }
+      }
+
+      if (check("penetrated")) {
+        var THEPENETRATIONBUTTON = document['createElement']('img'.toString())
+        THEPENETRATIONBUTTON.src = "/games/imgquest/captcha/robot.png"
+        document.body.append(THEPENETRATIONBUTTON)
+
+        var ROBOTBEATSTHEPENETRATION1000IQROBOT = document.createElement('img')
+        ROBOTBEATSTHEPENETRATION1000IQROBOT.src = '/games/imgquest/captcha/ROBOT PENETRATES.png'
+        ROBOTBEATSTHEPENETRATION1000IQROBOT.width = 300
+        document.body.append(ROBOTBEATSTHEPENETRATION1000IQROBOT)
+        console.log('THE PENETRATE')
+      }
+
+
+      /// images from sercet quests
+      /////
+      ///shhh
+
+      if (check("gallery:help")) {
+        let hi = document.createElement('h1')
+        hi.innerText = 'images from secret quests'
+        hi.style.fontSize = "30px"
+        var help = document.createElement('img')
+        help.src = "/games/imgquest/help.png"
+        help.style.width = "400px"
+        document.body.innerHTML += "<hr>"
+        document.body.append(hi)
+        document.body.append(help)
+        console.log('how can we help you')
+      }
+
+      if (check("gallery:enter")) {
+        var enter = document.createElement('img')
+        enter.src = "/games/imgquest/youpressedenter/duplicatefile.jpg"
+        enter.style.width = "400px"
+        document.body.append(enter)
+        console.log('you pressed enter')
+      }
+
+      // STUFF
+
+      function randomIntFromInterval(min, max) { // min and max included 
+        return Math.floor(Math.random() * (max - min + 1) + min)
+      }
+
+
+      var modal = document.getElementById("myModal")
+
+      // Get the <span> elements that closes the modal
+      var spans = [...document.getElementsByClassName("close")]
+
+      var randomfortune = document.getElementById('randomfortune')
+
+      // When the user clicks on <span> (x), close the modal
+      spans.forEach(span => {
+        span.onclick = function () {
+          modal.style.display = 'none'
+        }
+      })
+
+      window.onkeypress = function (e) {
+        if (e.key === 'Escape') {
+          modal.style.display = 'none'
+        }
+      }
+
+      // When the user clicks anywhere outside of the modal, close it
+      window.onclick = function (event) {
+        if (event.target == modal) {
+          modal.style.display = "none"
+        }
+      }
+
+      let bigtoe = document.getElementById('bigtoe')
+      bigtoe.onclick = () => {
+
+        //////// FORTUNES FROM TOE
+        const FORTUNES = [
+          'You will inherit 900 pounds of salami.',
+          'Bigfoot is waiting in the garage for you.',
+          'Your computer will explode in 15 seconds.',
+          'All your hair will fall out.',
+          'ImageQuest will be deleted.',
+          'You will find five thousand kittens in your closet.',
+          'You are actually the impostor and you don\'t know it.',
+          'You will go to jail for trying to steal salt and vinegar chips that someone had already stolen from you before, fall in lava, and turn into a lava monster.',
+          'Z̷̛̤͔͙̘̗̮̤͈̘͖̯̟̲̬͎͕͛̒̔̒̚A̴͚̱̙̰̪͎͚̟̪͙͈̒̓͋͜L̸͚̪̘̜̤̆́̒̐̎̂̓͝Ǵ̸̢͉͖̪̣͉͓̜̼͚̽͐͛Ő̷̢͗̊͆̒̔͋͂̀͐̚̚̕ ̵̡̟̼̜̩̠̺̓̇͒̏̅̊͛̋͊̀̕̚͝͝W̷̧͓̖̟͈̜̭̬͚̦̰͖̫͇͙̟̩͂́̈́͑̓̕͝ͅĮ̴̦̖̝̝̗͈̺̬͚͒̊͌̀̀̚ͅL̶̮͇͉̺̞̮̦̭̯̈͌̀̂́͐̀͛͜ͅͅL̵̨̧̟̫̹̱̮̤̺̿̓̃ ̵͓͉̟̆B̴̢̞̣̙̬̟̆͐̂͒̚͝E̴̢̢̬̙̣̤͖̭̲̮̖͒̀͑̅̌̑ ̵̗̱͍͌͆͘͝S̵̪̬͍̩̖̥͉͈͋͂̂͑͗́͋̃̚͠͝Ų̷̛̰̜̭̠̗̭̗̼̘̟͝M̶̢̢̞̩̹̫̖̫̬͍͙̥͓̼͓͍̈̽̂̈́̈́͆͌͐̅̉́̏M̶̨̫͕̹̺̝͗̾̽̊͋̓̔̕͘̚̚̕͜Ǫ̶̼̟̹͕̗̥͕̭̫͈̖̘̞̪͙̈̓̀̀̀͌̀͋͂̓̋̔́͜͝N̸͓̱͖̈̽͑̇̾͋͗͑̆͐̑̿̾̽̆̋͘E̸̮̫͊́͒͐̀̈́̏̈͒̂̾̀̈́̚̚͝Ḑ̵̡͓̜̗̪̖̬̥͆',
+          "You will be forced to eat roaches for the rest of your life.",
+          "Zurp zurp. Zop zurp zorp zurg.",
+          "You will cook cold tamales and be a disgrace to your entire family.",
+          "so terrible I'm afraid to even say it...",
+          "n̵̰̼̟̩̦̟͚͔̖̰̺͖͉̜̮͖̲̓́̓̌͌̏́̊̔̌̃́̆̃́͛ọ̶̢̡̭̺̻̞̤̬̙͙͎̿̈̀̋̈́̎̅̎̌͝",
+
+
+          "I refuse to describe your fortune. This is the fortune that will never be told. It will haunt your mind for the rest of your life. WA-HA-HA-HA-HA!!!! W̴͚̿̽A̴̱̺̥̓̅͝-̵͔̮͍́H̷̱͒̚A̶̜̣͋̕-̵̼̘̉̀̓H̷̯͇͒̈̀Ä̶̭͓́͝-̵͔̯͔̒̌͘H̷̯͕̤̆Á̷͎-̴̠̟̹̊̀H̷̛͉͚̻A̶͈̣̺͂̈́!̶̡͑͝!̴̢̢̦̒͘͠!̸̛̳̠̘!̷̬̰̞͌͝",
+          "Farts will cease to exist.",
+          "Your copy of Steve Smith by S Fox Jones will be stolen. (buy it now, only $9 on Amazon!!!)"
+
+        ]
+
+        const todaysfortune = FORTUNES[Math.floor(Math.random() * FORTUNES.length)]
+        console.log('cicked')
+        modal.style.display = "block"
+        if (toeCensored) {
+          document.getElementById('gplrandomfortune').innerHTML = "The foot cannot tell you your fortune as gross foot censoring is enabled, so it doesn't exist. You can change the settings so that the foot is not censored. <br><a href=\"/games/imgquest/settings\">Go to settings</a>"
+        } else {
+
+          randomfortune.innerText = todaysfortune
+        }
+      }
+    })
+
+
+      document.onclick = function (e) {
+        if (e.target.getAttribute('src') == '/dragonfly_eyeballs/cat.png' || e.target.classList.contains('kittycatkittycatkitty')) {
+
+          console.log('wow')
+          var audio = new Audio('gallerymedia/mew.mp3')
+          audio.play()
+          triggerSnackbar("Mew!")
+        }
+
+        if (e.target.getAttribute('src') == '/bruh/kanye-west.gif') {
+
+          console.log('bruh click')
+          var audio = new Audio('gallerymedia/bruh.mp3')
+          audio.play()
+
+          triggerSnackbar("bruh")
+        }
+        if (e.target.getAttribute('src') == '/CLICKIT/CRICKIT.png') {
+          handleCricket(e.target)
+        }
+
+        if (e.target.classList.contains('dog')) {
+
+          console.log('owof')
+          var audio = new Audio('gallerymedia/woof.mp3')
+          audio.play()
+          triggerSnackbar("WOOF WOOF WOOF WOOF WOOF")
+        }
+
+        if (e.target.getAttribute('src') == '/bruh/beluga-cat-meme-discord.gif') {
+
+          console.log('MLG')
+          var audio = new Audio('gallerymedia/mlg.mp3')
+          audio.play()
+        }
+      }
+
+      function triggerSnackbar(text) {
+
+        console.log('hhhh')
+        // Get the snackbar DIV
+        var x = document.getElementById("snackbar")
+
+        x.innerText = text
+
+        // Add the "show" class to DIV
+        x.classList.add("show")
+
+        // After 3 seconds, remove the show class from DIV
+        setTimeout(function () { x.classList.remove('show') }, 5000)
+      }
+      function handleCricket(cricket) {
+        console.log('crick', cricket)
+        // cricket.addEventListener('click', function(){
+        console.log('crick crick')
+        var audio = new Audio('gallerymedia/crickets.mp3')
+        audio.play()
+        // })
+      }
+
+  </script>
+  </div>
+</body>
+
+</html>

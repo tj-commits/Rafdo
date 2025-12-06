@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
+	<link rel="stylesheet" href="/games/imgquest/clickthecat/style.css" />
+
+	</script>
+	<style>
+		.petimage {
+			cursor: default;
+		}
+
+		body {
+			color: white;
+		}
+	</style>
+	<title>clickthecat</title>
+</head>
+
+<body style="background-color: goldenrod">
+	<h2>Try to memorize the pets and their names. <span id="timer">20</span> seconds remaining</h2>
+    <p>Each name is below the image</p>
+    <button onclick="location.replace('/games/imgquest/clickthecat/round1/')">I think I've looked at them enough</button>
+	<figure>
+		<img src="/games/imgquest/petimages/marty.jpg" alt="marty" class="petimage" width="135"/games/imgquest/>
+  <figcaption>Marty</figcaption>
+</figure>
+<hr>
+    <figure>
+    <img
+      src="/games/imgquest/petimages/george.jpg"
+      width="101"
+      alt="Georgie"
+      class="petimage"
+    />
+    <figcaption>George</figcaption>
+    </figure><hr>
+    <figure>
+        <img src="/games/imgquest/petimages/lucy.jpg" alt="lucy" class="petimage" width="101"/games/imgquest/>
+        <figcaption>Lucy</figcaption>
+    </figure><hr>
+    <figure>
+    <img
+      src="/games/imgquest/petimages/bitsy.jpg"
+      alt="bitsy"
+      class="petimage"
+      width="101"
+      id="tobeclickedon"
+    /><figcaption>Bitsy</figcaption></figure><hr>
+    <figure>
+        <img src="/games/imgquest/petimages/ginger.jpg" alt="gingrnut" class="petimage" width="100" />
+        <figcaption>Ginger</figcaption>
+    </figure><hr>
+    <figure>
+    <img
+      src="/games/imgquest/petimages/nesto.jpg"
+      alt="ernesto"
+      class="petimage"
+      width="120"
+    /><figcaption>Nesto</figcaption>
+    </figure><hr>
+    <figure>
+        <img
+      src="/games/imgquest/petimages/lester.jpg"
+      alt="big spraya lesta"
+      class="petimage"
+      width="160"
+    /><figcaption>Lester</figcaption>
+    </figure><hr>
+    <figure>
+    <img
+      src="/games/imgquest/petimages/rosie.jpg"
+      alt="wosie posie"
+      class="petimage"
+      width="213"
+    /><figcaption>Rosie</figcaption></figure><hr>
+    <figure><img
+      src="/games/imgquest/petimages/minnie-kitty.jpg"
+      alt="minnie kitty"
+      class="petimage"
+      width="150"
+    />
+    <figcaption>Minnie Kitty</figcaption>
+    </figure><hr>
+    <figure>
+        <img src="/games/imgquest/petimages/phoebe.jpg" alt="feebs" class="petimage" width="150" />
+        <figcaption>Phoebe</figcaption>
+    </figure><hr>
+    <script>
+        const timerElement = document.getElementById('timer')
+        let timer = 20
+        setInterval(() => {
+            if (timer === 0) {
+                location.replace('/games/imgquest/clickthecat/round1/')
+            } else {
+            timer = timer - 1
+            timerElement.innerText = timer.toString()
+            }
+        }, 1000)
+    </script>
+  </body>
+</html>

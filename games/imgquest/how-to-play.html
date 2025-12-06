@@ -1,0 +1,33 @@
+
+    <meta
+      http-equiv="Cache-Control"
+      content="no-cache, no-store, must-revalidate"
+    />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <link href="./styles.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=SUSE:wght@100..800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<title>How to play ImageQuest</title>
+    <button id="backhome">Back Home</button>
+    
+
+    <h1>How to play ImageQuest<sub>e</sub></h1>
+    <p>
+      Complete a quest to get images in the gallery. Get as many
+      images as you can!
+    </p>
+
+    <h2>Why are some quests "locked?"</h2>
+    <p>The reason some quests are always locked (unless you have completed all of them) is because you have not completed the ones before it yet. The game will not let 
+      you play quests after the current one. In other words, if you have not completed the first quest, you cannot just jump to the second quest. If you have not completed the third quest, you cannot just jump to the fourth quest. It's the same with all the quests.</p>
+
+    <h2>Need more help?</h2>
+    <p>See the <a href="/games/imgquest/faq.html">ImageQuest FAQ</a>.</p>
+    <script>
+        document.getElementById('backhome').onclick = () => {
+            console.log('clicle')
+            if (new URLSearchParams(location.search).get("ref") != null) { location.assign('./home.html') }
+            else { location.assign('/games/imgquest/discover.html') }
+        }</script>

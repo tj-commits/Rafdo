@@ -1,0 +1,9 @@
+body {
+  text-align: center;
+  z-index: 99999999999999;
+}
+
+.petimage {
+  border: 2px grey solid;
+  cursor: pointer;
+}

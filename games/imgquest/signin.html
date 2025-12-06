@@ -1,0 +1,197 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign In to ImageQuest</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    
+    <style>
+        /* CSS is kept simple for clarity */
+        body {
+            background: #333;
+            color: white;
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+        .login-box {
+            background: #222;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+        }
+        input[type="email"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #555;
+            background: #444;
+            color: white;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .btn-group button {
+            padding: 10px;
+            border: none;
+            outline: none;
+            background: #006400; /* Dark Green */
+            color: white;
+            font-family: sans-serif;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 200ms ease-in-out;
+            width: 48%; /* Adjust for side-by-side buttons */
+            margin: 1%;
+        }
+        .btn-group button:hover {
+            background: #008000; /* Brighter Green */
+        }
+        #message {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            background: #444;
+        }
+    </style>
+</head>
+<body>
+
+<div class="login-box">
+    <h1>Log in to or create an AuraLink account to continue</h1>
+    <div id="form-container">
+        <input type="email" id="email-input" placeholder="Email Address" required>
+        <input type="password" id="password-input" placeholder="Password" required>
+        <div class="btn-group">
+            <button id="sign-up-btn">Sign Up</button>
+            <button id="sign-in-btn">Sign In</button>
+        </div>
+        <button id="forgot-password-btn" style="margin-top: 15px; background: #555; width: 100%;">Forgot Password?</button>
+    </div>
+    
+    <div id="message" style="display:none;"></div>
+</div>
+
+<script>
+    // IMPORTANT: Replace these placeholder values with your actual Firebase config
+    const firebaseConfig = {
+  apiKey: "AIzaSyA0od4tjCBHxltVHE3Uw-Ht5Frd2kDSOWc",
+  authDomain: "winged-amp-476818-s8.firebaseapp.com",
+  projectId: "winged-amp-476818-s8",
+  storageBucket: "winged-amp-476818-s8.firebasestorage.app",
+  messagingSenderId: "819476698359",
+  appId: "1:819476698359:web:5a96fd58e4e1482b40aff2",
+  measurementId: "G-B7FN0MX2JD"
+};
+    
+    // Initialize Firebase App
+    const app = firebase.initializeApp(firebaseConfig);
+    const auth = app.auth();
+
+    const emailInput = document.getElementById('email-input');
+    const passwordInput = document.getElementById('password-input');
+    const signUpBtn = document.getElementById('sign-up-btn');
+    const signInBtn = document.getElementById('sign-in-btn');
+    const forgotPasswordBtn = document.getElementById('forgot-password-btn');
+    const messageDiv = document.getElementById('message');
+    
+    const HOME_PAGE_PATH = './home.html'; // Or your main app page
+
+    /** Helper to display messages to the user. */
+    const showMessage = (text, color) => {
+        messageDiv.textContent = text;
+        messageDiv.style.backgroundColor = color === "red" ? '#6b0000' : (color === "green" ? '#004d00' : '#808000');
+        messageDiv.style.display = 'block';
+    };
+    
+    /** Redirects user after successful sign-in/sign-up. */
+    const redirectToApp = () => {
+        showMessage("✅ Success! Redirecting...", "green");
+        setTimeout(() => {
+            window.location.assign(HOME_PAGE_PATH);
+        }, 1500);
+    };
+
+    /** Handles new user sign up. */
+    const handleSignUp = async () => {
+        const email = emailInput.value;
+        const password = passwordInput.value;
+        if (!email || !password) {
+            showMessage("Please enter both email and password.", "red");
+            return;
+        }
+
+        try {
+            await auth.createUserWithEmailAndPassword(email, password);
+            // User is automatically signed in upon creation
+            redirectToApp();
+        } catch (error) {
+            console.error("Sign Up Error:", error);
+            showMessage(`❌ Sign Up Failed: ${error.message}`, "red");
+        }
+    };
+    
+    /** Handles existing user sign in. */
+    const handleSignIn = async () => {
+        const email = emailInput.value;
+        const password = passwordInput.value;
+        if (!email || !password) {
+            showMessage("Please enter both email and password.", "red");
+            return;
+        }
+
+        try {
+            await auth.signInWithEmailAndPassword(email, password);
+            redirectToApp();
+        } catch (error) {
+            console.error("Sign In Error:", error);
+            showMessage(`❌ Sign In Failed: ${error.message}`, "red");
+        }
+    };
+    
+    /** Handles password reset. */
+    const handleForgotPassword = async () => {
+        const email = emailInput.value;
+        if (!email) {
+            showMessage("Enter your email above to send a password reset link.", "yellow");
+            return;
+        }
+        
+        try {
+            await auth.sendPasswordResetEmail(email);
+            showMessage(`📧 Password reset email sent to ${email}!`, "green");
+        } catch (error) {
+            console.error("Password Reset Error:", error);
+            showMessage(`❌ Error sending reset email: ${error.message}`, "red");
+        }
+    };
+
+    // Attach event listeners
+    signUpBtn.addEventListener('click', handleSignUp);
+    signInBtn.addEventListener('click', handleSignIn);
+    forgotPasswordBtn.addEventListener('click', handleForgotPassword);
+    
+    // Check if the user is already signed in on page load
+    auth.onAuthStateChanged(user => {
+        if (user) {
+            showMessage(`Welcome back, ${user.email}. Redirecting...`, "green");
+            setTimeout(() => {
+                window.location.assign(HOME_PAGE_PATH);
+            }, 500);
+        }
+    });
+
+</script>
+</body>
+</html> -->
+<script>location.replace('/r2/notepad/?dashboard=1&return=/games/imgquest/index.html')</script>

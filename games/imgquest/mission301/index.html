@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="windows-1252" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+
+    <script src="/games/imgquest/ife/client.js"></script>
+<meta http-equiv="Expires" content="0" />
+    
+    <style>
+        /* Your existing styles (Kept exactly as requested) */
+        body {
+            z-index: 99999999999999999;
+        }
+        #num {
+            font-size: 3em;
+        }
+
+        /* --- NEW STYLES FOR BETTER LOOK AND LAYOUT --- */
+        body {
+            /* General Aesthetics */
+            font-family: 'Arial Black', Gadget, sans-serif;
+            background-color: #2c3e50; /* Dark background for contrast */
+            color: #ecf0f1; /* Light text color */
+            
+            /* Layout: Center everything */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        /* Heading Style */
+        h1 {
+            font-size: 3em;
+            color: #e74c3c; /* Red color for main title */
+            margin-bottom: 0.5em;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Objective Text */
+        p {
+            font-size: 1.2em;
+            margin-bottom: 1em;
+        }
+        
+        /* Highlight the target number in the objective */
+        #number {
+            color: #2ecc71; /* Green highlight for the target number */
+            font-weight: bold;
+        }
+
+        /* The main, rapidly changing number */
+        #num {
+            font-size: 8em; /* Make the main number huge */
+            color: #f1c40f; /* Yellow/Gold color */
+            margin: 0.2em 0;
+            line-height: 1;
+        }
+        
+        /* Button Styles */
+        button {
+            font-family: 'Arial Black', Gadget, sans-serif;
+            text-transform: uppercase;
+            padding: 15px 30px;
+            margin: 10px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.5em;
+            transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+            box-shadow: 0 4px #95a5a6; /* Default shadow */
+        }
+        
+        /* Primary "eight" button (The one to click) */
+        #what {
+            background-color: #2ecc71; /* Green/Success color */
+            color: white;
+            box-shadow: 0 5px #27ae60;
+        }
+
+        #what:active {
+            box-shadow: 0 2px #27ae60;
+            transform: translateY(3px);
+        }
+        
+        /* "Give Up" Button */
+        #giveup {
+            background-color: #e67e22; /* Orange/Warning color */
+            color: white;
+            box-shadow: 0 5px #d35400;
+        }
+
+        #giveup:active {
+            box-shadow: 0 2px #d35400;
+            transform: translateY(3px);
+        }
+        
+        /* "Reset" Button */
+        #reset {
+            background-color: #3498db; /* Blue/Info color */
+            color: white;
+            box-shadow: 0 5px #2980b9;
+        }
+
+        #reset:active {
+            box-shadow: 0 2px #2980b9;
+            transform: translateY(3px);
+        }
+
+        /* Status Area (for the image) */
+        #status img {
+            margin-top: 20px;
+            max-width: 100%;
+            height: auto;
+            border: 4px solid #e74c3c; /* Red border for lose image */
+            border-radius: 5px;
+        }
+    </style>
+    <title>ImageQuest Eight Match</title>
+  </head>
+  <body>
+      
+      <h1 font-size="50px !important">EIGHT MATCH</h1>
+      <button id="giveup">give up</button><Br>
+      <p>Objective: Click "eight" when the number is <span id="number">8</span>.</p>
+      <button id="what">eight</button><Br>
+      <p id="num">2</p>
+      <div id="status"></div>
+      <button id="reset">Reset</button>
+      <script>
+          
+
+          const giveup = document.getElementById("giveup")
+          giveup.style.display = 'none'
+    
+    setTimeout(function() {
+        giveup.style.display = 'block'
+    }, 10_000)
+          let interval = setInterval(() => {
+              function randomNumberBetween(min,max) {
+                return Math.floor(Math.random() * (max - min + 1) + min)
+              }
+              document.getElementById("num").innerText = randomNumberBetween(0,8)
+              document.querySelector('#giveup').onclick = function () {
+
+                    location.assign("/games/imgquest/mission301/eight.html")
+              }
+              document.getElementById("what").onclick = () => {
+                clearInterval(interval)
+                if (document.getElementById("num").innerText == "8") {
+                    location.assign("/games/imgquest/mission301/eight.html")
+                } else {
+                    document.getElementById("status").innerHTML = "<img src='/games/imgquest/CLICKIT/LOOZ.png' alt='Text that says YOU LOSE' width=86 />"
+                }
+              }
+          }, 100)
+          document.getElementById("reset").onclick = function() {
+              location.reload()
+          }
+      </script>
+  </body>
+</html>

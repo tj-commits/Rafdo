@@ -1,0 +1,30 @@
+<style>
+   .color {
+      width: 50;
+      height: 50;
+   }
+</style>
+
+ <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+
+<p>Color 1:</p>
+<div class="color" style="background-color: black;"></div>
+<p>Color 2: </p>
+<div class="color" style="background-color: #1b1515;"></div><br>
+
+<button id="y">They are the same color</button>
+<button id="n">They are not the same color</button>
+
+<script>
+   let y = document.querySelector('#y')
+   let n = document.querySelector('#n')
+   n.onclick = function() {
+       alert('correct')
+      location.assign('hard2.html')
+   }
+   y.onclick = function() {
+      location.assign('lose.html?from=hard.html')
+   }
+</script>

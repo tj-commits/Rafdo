@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+  <script src="/games/imgquest/ife/auralink.js"></script>
+  <script src="/games/imgquest/ife/client.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    @font-face {
+      font-family: Bruh;
+      src: url("DumbNSillyRegular-2OEyW.ttf");
+    }
+
+    body {
+      overflow-wrap: break-word;
+      font-family: Bruh;
+      font-size: 2em;
+    }
+
+    #loader67 {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    /* Full-Screen Dialog Styles */
+    #confirmation-dialog {
+      /* Full screen positioning */
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      margin: 0;
+      padding: 5vw;
+      box-sizing: border-box;
+
+      /* Visual styling */
+      font-family: Arial, sans-serif;
+      font-size: 1em;
+      border: none;
+      background: #eee;
+      /* Text above buttons: main container is column */
+      display: flex;
+      flex-direction: column; 
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      z-index: 10;
+      
+      /* --- FIX: Add padding at the top to clear the fixed character box --- */
+      padding-top: 15vh; 
+    }
+
+    /* Styling for the dialog message text */
+    #dialog-message {
+      max-width: 80%; 
+      font-size: 1em; 
+      margin-right: 0; 
+      margin-bottom: 20px; 
+    }
+
+    /* Button container uses row to put buttons side-by-side */
+    #dialog-buttons {
+        display: flex;
+        flex-direction: row; 
+        gap: 10px; 
+    }
+
+    #dialog-buttons button {
+      font-family: Bruh;
+      font-size: 1.2em;
+      padding: 0.5em 1em;
+      margin: 0.5em; 
+    }
+
+    /* Center and Slightly Bigger Initial Button */
+    #bruh {
+      /* Positioning */
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+
+      /* Sizing: Slightly larger than default, but not gigantic */
+      padding: 0.8em 1.5em;
+      font-size: 1.3em;
+    }
+
+    /* Audio Icon Styling (Now text/emoji based) */
+    #audio-toggle-icon {
+      position: fixed;
+      top: 15px;
+      right: 15px;
+      font-size: 2em;
+      cursor: pointer;
+      z-index: 1000;
+    }
+    
+    /* New Style for Success State */
+    #win-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 2em;
+        box-sizing: border-box;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
+    }
+
+    #win-screen h1 {
+        font-size: 2em;
+        margin: 0.1em;
+    }
+
+    /* --- Character Box Styles (FREE-FLOATING TOP-CENTER IMAGE) --- */
+    #character-box {
+        position: fixed;
+        top: 20px; 
+        left: 50%;
+        transform: translateX(-50%); 
+        width: auto;
+        height: auto; 
+        background: none; 
+        display: none; 
+        box-sizing: border-box;
+        padding: 0; 
+        z-index: 20;
+    }
+
+    #character-image {
+        position: static; 
+        height: auto; 
+        max-height: 30vh; 
+        width: auto;
+        image-rendering: pixelated;
+    }
+    
+    /* --- OPTIONAL: Adjust character height on very small screens to prevent overlap (Max-width 600px is typical mobile) --- */
+    @media (max-width: 600px) {
+        #character-image {
+            max-height: 20vh; /* Make the fox smaller on mobile */
+        }
+        #confirmation-dialog {
+            padding-top: 10vh; /* Reduce padding slightly since the fox is smaller */
+        }
+    }
+
+
+    /* --- Hide the speech text --- */
+    #character-speech {
+        display: none; 
+    }
+  </style>
+  <title>ImageQuest </title>
+</head>
+
+<body>
+  <div id="b" style="display: none;">
+    <p>YOU LOSE</p>
+    <button onclick="location.reload()">try again</button>
+  </div>
+
+  <p id="loader67">Loading page...</p>
+
+  <button id="bruh" style="display:none">Click me for a surprise</button>
+
+  <span id="audio-toggle-icon">🔊</span>
+
+  <audio id="bruh-audio" src="bruh.mp3"></audio>
+  <audio id="ping-audio" src="ping.mp3"></audio>
+  <audio id="win-audio" src="win.mp3"></audio>
+
+  <div id="character-box"> 
+    <img id="character-image" src="fox-explaining.png" alt="Fox">
+    <div id="character-speech">...Fox awaits your response...</div>
+  </div>
+
+
+  <dialog id="confirmation-dialog" style="display:none">
+    <p id="dialog-message"></p>
+    <div id="dialog-buttons">
+      <button id="dialog-yes">Yes</button>
+      <button id="dialog-no">No</button>
+    </div>
+  </dialog>
+
+
+  <script defer>
+    console.log(location.href)
+
+    // --- State Variables ---
+    let messageIndex = 0
+    let audioEnabled = true // Audio is ON by default
+
+    // --- DOM Elements ---
+    const dialog = document.getElementById('confirmation-dialog')
+    const messageDisplay = document.getElementById('dialog-message') // Now the main prompt text
+    const yesButton = document.getElementById('dialog-yes')
+    const noButton = document.getElementById('dialog-no')
+    const initialButton = document.getElementById('bruh')
+
+    // Character Elements
+    const characterBox = document.getElementById('character-box');
+    const characterImage = document.getElementById('character-image');
+    const characterSpeech = document.getElementById('character-speech');
+
+
+    // Audio Elements
+    const bruhAudio = document.getElementById('bruh-audio')
+    const pingAudio = document.getElementById('ping-audio')
+    const audioIcon = document.getElementById('audio-toggle-icon')
+    const winAudio = document.getElementById('win-audio')
+
+
+    // --- Audio Functions ---
+
+    function toggleAudio() {
+      audioEnabled = !audioEnabled
+      // Update the emoji based on the state
+      audioIcon.textContent = audioEnabled ? '🔊' : '🔇'
+      console.log(`Audio is now ${audioEnabled ? 'enabled' : 'disabled'}`)
+    }
+
+    function playSound(audioElement) {
+      if (audioEnabled) {
+        // Stop and rewind the audio before playing to prevent overlap issues
+        audioElement.currentTime = 0
+        audioElement.play().catch(e => console.error("Audio play failed:", e))
+      }
+    }
+
+
+    // --- Classes ---
+
+    // Character Class
+    class Character {
+        static speaking = false; // Prevents spamming speech
+
+        static speak(message, state = 'explaining') {
+            if (this.speaking) return;
+            this.speaking = true;
+
+            // 1. Update Image and State
+            characterImage.src = state === 'mad' ? 'fox-mad.png' : 'fox-explaining.png';
+            
+            // 2. We skip setting characterSpeech text because CSS hides it, 
+            // but we still use the state to change the image.
+
+            // 3. Display the Character Box
+            characterBox.style.display = 'block'; // Use block for centering
+
+            // Reset speaking flag after a short delay
+            setTimeout(() => {
+                this.speaking = false;
+            }, 500); // 500ms delay to prevent immediate state change issues
+        }
+
+        static hide() {
+            characterBox.style.display = 'none';
+        }
+    }
+
+
+    class BruhSpam {
+      constructor() {
+        document.body.innerHTML += `bruhbrbhubrhurhburbhubhbruhbrubhbruh`.repeat(677)
+      }
+    }
+    class bruhify {
+      constructor() {
+        // Trigger the BRUH sound effect
+        playSound(bruhAudio)
+        Character.speak("Haha, tricked you! You don't get this quest", 'explaining'); // CHARACTER STATE CHANGE
+
+        // Cleanup
+        initialButton.remove()
+
+        dialog.close()
+        dialog.style.display = 'none'
+
+        document.body.innerHTML += "<img src=\"kanye-west.gif\" alt=\"bruh\" width=100% height=200px><img src=\"beluga-cat-meme-discord.gif\" alt=\"bruh\" width=20% height=100px><h1 style=\"font-size:4em;text-align:center\">BRUH</h1>"
+        new BruhSpam()
+        document.getElementById('b').style.display = "block"
+      }
+    }
+    
+    // *** WIN GAME CLASS ***
+    class WinGame {
+        constructor() {
+            // Play the win sound effect
+            playSound(winAudio);
+            // Clear the body and show success screen
+            document.body.innerHTML = `
+                <div id="win-screen">
+                    <img src="fox-mad.png" alt="Fox" width="300">
+                    <h1>🎉 OK, FINE!!!! I GIVE UP!!!!!!!!!!!!!!!!!! YOU WIN!!!! BE SURPRISED! 🎉</h1>
+                    <p>You survived all 67 reasons to not be surprised. That's the real surprise. Also, you unlocked two new images.</p>
+                    <p style="font-size: 0.8em;">(Now go touch some grass)</p> 
+                    <p id="saving">PLEASE WAIT, SAVING DATA...</p>
+                    <button onclick="location.assign('/games/imgquest/gallery.html')" id="gtg" style="display: none;">go to gallery</button>
+                </div>
+            `;
+            // Re-attach audio toggle icon as the body was overwritten
+            document.body.innerHTML += '<span id="audio-toggle-icon" onclick="toggleAudio()">🔊</span>';
+            CloudStorage.setItem('gallery:fox', 'mhm')
+            CloudStorage.syncBeforeRedirect().then(function() {
+document.getElementById('saving').remove()
+document.getElementById('gtg').removeAttribute('style')
+  
+})
+
+        }
+    }
+
+
+    // --- Confirmation Data (74 total messages) ---
+    // KEPT the array of objects with message and state
+    const bruhifyConfirmations = [
+      { message: 'Hi, there, it\'s the creator of ImageQuest, Fox. I\'m here to look out for you, and I want to ask you something: are you sure you want to be surprised? The surprise may surprise you.', state: 'explaining' },
+      { message: 'Really? Do you really, actually genuinely WANT to be surprised???', state: 'explaining' },
+      { message: 'Okay, last chance, are you SURE do you REALLY want to be surprised?', state: 'explaining' },
+      { message: `You sure you're thinking correctly? Maybe you should change your mind? Wanna be surprised?`, state: 'explaining' },
+      { message: "Surprises might not actually be that surprising, you know. Maybe this surprise isn't as surprising as you might think? Okay. Do you still want to be surprised?", state: 'explaining' },
+      { message: "Surprises are stupid. Why do you want to be surprised? Please, please, please don't ask for a surprise again. I must repeat the question. Do you want to be surprised?", state: 'explaining' },
+      { message: "Why, just tell me, why, why? Why do you want a surprise? Why? I could name 67 reasons why you shouldn't ask for a surprise? Do you want me to suffer like that? No, you're a good person, right? But if you still want a surprise, I'll have to name all 67 of those reasons. Please say you don't want a surprise. Do you want a surprise?", state: 'mad' },
+      { message: "*sighs*. Okay fine. Reason 1: A surprise party disregards the recipient's current emotional energy level. Do you still want to be surprised?", state: 'explaining' },
+      { message: "Reason 2: The surprise gift might conflict with existing inventory or personal style. Do you still want to be surprised?", state: 'explaining' },
+      { message: "Reason 3: Receiving a surprise trip leaves no time for necessary travel preparation. Do you still want to be surprised?", state: 'explaining' },
+      { message: "Reason 4: The secrecy required for a surprise can create unnecessary tension between the planner and recipient. Do you still want to be surprised?", state: 'explaining' },
+      { message: "Reason 5: An unexpected surprise event often requires the recipient to feel obligated to perform gratitude. Do you still want to be surprised?", state: 'explaining' },
+      { message: "Reason 6: The dramatic moment of a surprise reveal overshadows the actual core enjoyment of the event. Do you still want to be surprised?", state: 'explaining' },
+      { message: "Reason 7: A surprise commitment, like a pet, may introduce unwanted financial burdens. Do you still want to be surprised?", state: 'explaining' },
+      { message: "Reason 8: The sudden, unexpected nature of a surprise can be emotionally jarring or stressful. Do you still want to be surprised?", state: 'explaining' },
+      { message: "Reason 9: A surprise requires the recipient to cancel or reschedule existing plans without warning. Do you still want to be surprised?", state: 'explaining' },
+      { message: "Reason 10: Executing a successful surprise places undue pressure and anxiety on the giver. Do you still want to be surprised?", state: 'explaining' },
+      { message: "Reason 11: An uncoordinated surprise could lead to receiving duplicate gifts from different sources. Do you still want to be surprised?", state: 'explaining' },
+      { message: "Reason 12: The logistical complexity of a surprise increases the risk of embarrassing public failure. Do you still want to be surprised?", state: 'explaining' },
+      { message: "Reason 13: A poorly chosen surprise demonstrates a lack of understanding of the recipient's true wishes. Do you still want to be surprised?", state: 'explaining' },
+      { message: "Reason 14: The lack of choice in a surprise violates the recipient's sense of autonomy and control. Do you still want to be surprised?", state: 'explaining' },
+      { message: "Reason 15: A surprise gathering might include guests the recipient actively dislikes. Do you still want to be surprised?", state: 'explaining' },
+      { message: "Reason 16: The surprise element often costs more money than a collaboratively planned event. Do you still want to be surprised?", state: 'explaining' },
+      { message: "Reason 17: A surprise proposal, if unwanted, creates a public, high-pressure ethical dilemma. Do you still want to be surprised?", state: 'explaining' },
+      { message: "Reason 18: The surprise setting may not be accessible or comfortable for the recipient. Do you still want to be surprised?", state: 'explaining' },
+      { message: "Reason 19: A surprise requires immediate adjustment, eliminating the pleasant feeling of anticipation. Do you still want to be surprised?", state: 'explaining' },
+      { message: "Reason 20: The need to lie or conceal information for a surprise can temporarily erode trust. Do you still want to be surprised?", state: 'explaining' },
+      { message: "Reason 21: A surprise forces the recipient into an awkward, immediate spotlight. Do you still want to be surprised?", state: 'explaining' },
+      { message: "Reason 22: The secrecy of the surprise limits the ability to check for allergies or dietary needs. Do you still want to be surprised?", state: 'explaining' },
+      { message: "Reason 23: The surprise is often more rewarding for the planner than the person being surprised. Do you still want to be surprised?", state: 'explaining' },
+      { message: "Reason 24: A large-scale surprise may interfere with work commitments or scheduled obligations. Do you still want to be surprised?", state: 'explaining' },
+      { message: "Reason 25: The fear of ruining the surprise makes the planning phase stressful for everyone involved. Do you still want to be surprised?", state: 'explaining' },
+      { message: "Reason 26: An unwanted surprise forces the recipient to have a difficult conversation about disappointment. Do you still want to be surprised?", state: 'explaining' },
+      { message: "Reason 27: The clothing and appearance of the recipient are often inappropriate for the surprise event. Do you still want to be surprised?", state: 'explaining' },
+      { message: "Reason 28: A surprise removes the empowering feeling of making a joint decision. Do you still want to be surprised?", state: 'explaining' },
+      { message: "Reason 29: The surprise element can be quickly spoiled, making all the effort moot. Do you still want to be surprised?", state: 'explaining' },
+      { message: "Reason 30: Receiving a surprise may obligate the recipient to plan an equally grand gesture in return. Do you still want to be surprised?", state: 'explaining' },
+      { message: "Reason 31: A surprise forces the recipient to deal with unplanned logistics like childcare. Do you still want to be surprised?", state: 'explaining' },
+      { message: "Reason 32: The noise and suddenness of a surprise reveal can be medically detrimental to some. Do you still want to be surprised?", state: 'explaining' },
+      { message: "Reason 33: The surprise is an unreliable method of showing affection, prioritizing shock over substance. Do you still want to be surprised?", state: 'explaining' },
+      { message: "Reason 34: A surprise gift often needs to be returned or exchanged later, wasting time. Do you still want to be surprised?", state: 'explaining' },
+      { message: "Reason 35: The surprise party venue may clash with the recipient's personal taste. Do you still want to be surprised?", state: 'explaining' },
+      { message: "Reason 36: The effort put into the surprise becomes the main focus, not the celebration itself. Do you still want to be surprised?", state: 'explaining' },
+      { message: "Reason 37: A surprise can happen at a moment when the recipient is already stressed or preoccupied. Do you still want to be surprised?", state: 'explaining' },
+      { message: "Reason 38: The concept of a surprise can be used as emotional leverage or manipulation. Do you still want to be surprised?", state: 'explaining' },
+      { message: "Reason 39: The surprise leaves no time to prepare thoughtful thank-you notes. Do you still want to be surprised?", state: 'explaining' },
+      { message: "Reason 40: A surprise event may violate the recipient's established boundaries or privacy. Do you still want to be surprised?", state: 'explaining' },
+      { message: "Reason 41: The logistics of hiding a surprise item (e.g., a car) are often cumbersome. Do you still want to be surprised?", state: 'explaining' },
+      { message: "Reason 42: A surprise can feel infantilizing, suggesting the recipient can't handle planning. Do you still want to be surprised?", state: 'explaining' },
+      { message: "Reason 43: The adrenaline crash after the shock of a surprise is physically exhausting. Do you still want to be surprised?", state: 'explaining' },
+      { message: "Reason 44: A surprise forces the recipient to neglect their everyday responsibilities temporarily. Do you still want to be surprised?", state: 'explaining' },
+      { message: "Reason 45: The execution of the surprise often leads to easily detectable or obvious clues. Do you still want to be surprised?", state: 'explaining' },
+      { message: "Reason 46: The surprise puts temporary social pressure on the recipient to be the life of the party. Do you still want to be surprised?", state: 'explaining' },
+      { message: "Reason 47: An expensive surprise may make the recipient feel uncomfortable about the cost. Do you still want to be surprised?", state: 'explaining' },
+      { message: "Reason 48: A surprise can unintentionally interrupt a meaningful personal moment. Do you still want to be surprised?", state: 'explaining' },
+      { message: "Reason 49: The surprise element is often remembered more than the actual event's content. Do you still want to be surprised?", state: 'explaining' },
+      { message: "Reason 50: The surprise gift may not be covered by the recipient's preferred warranty or insurance. Do you still want to be surprised?", state: 'explaining' },
+      { message: "Reason 51: The planning of a surprise requires the giver to rely on secondhand information. Do you still want to be surprised?", state: 'explaining' },
+      { message: "Reason 52: The surprise ignores the stability and comfort found in routine. Do you still want to be surprised?", state: 'explaining' },
+      { message: "Reason 53: A surprise party requires dealing with an awkward room-full of people upon entry. Do you still want to be surprised?", state: 'explaining' },
+      { message: "Reason 54: The stress of managing the secret leads to unnecessary surprise related paranoia. Do you still want to be surprised?", state: 'explaining' },
+      { message: "Reason 55: A surprise announcement can prematurely reveal private news to the public. Do you still want to be surprised?", state: 'explaining' },
+      { message: "Reason 56: The anticipation of a surprise often leads to incorrect, anxiety-inducing guessing. Do you still want to be surprised?", state: 'explaining' },
+      { message: "Reason 57: The surprise prevents the recipient from properly organizing and delegating tasks. Do you still want to be surprised?", state: 'explaining' },
+      { message: "Reason 58: A surprise may force the recipient to socialize when they had planned for alone time. Do you still want to be surprised?", state: 'explaining' },
+      { message: "Reason 59: The surprise party setup often leads to excessive, wasteful decorations. Do you still want to be surprised?", state: 'explaining' },
+      { message: "Reason 60: A surprise trip may require the recipient to miss a pre-paid or non-refundable activity. Do you still want to be surprised?", state: 'explaining' },
+      { message: "Reason 61: The surprise removes the recipient's ability to budget their energy for the day. Do you still want to be surprised?", state: 'explaining' },
+      { message: "Reason 62: The surprise leaves no time for the recipient to process the change being introduced. Do you still want to be surprised?", state: 'explaining' },
+      { message: "Reason 63: A surprise may necessitate a sudden wardrobe change in an inconvenient place. Do you still want to be surprised?", state: 'explaining' },
+      { message: "Reason 64: The forced excitement of a surprise can feel inauthentic and manufactured. Do you still want to be surprised?", state: 'explaining' },
+      { message: "Reason 65: A surprise may accidentally happen while the recipient is feeling unwell. Do you still want to be surprised?", state: 'explaining' },
+      { message: "Reason 66: The surprise can feel like an obligation rather than a pure act of thoughtfulness. Do you still want to be surprised?", state: 'explaining' },
+      { message: "Reason 67: The overall risk-to-reward ratio of a surprise is heavily tilted toward failure. Do you still want to be surprised?", state: 'explaining' },
+      { message: "*takes a deep breath* Okay. Now do you still want to be surprised?", state: 'mad' },
+      { message: "O.M.G.!!!!!! DO YOU WANT ME TO KEEP SUFFERING? SAY NO, NOW, DON'T BE SURPRISED!!!!!!!!", state: 'mad' },
+    ]
+
+    // --- Core Logic ---
+
+    function startConfirmationChain() {
+      // 1. Hide the initial button now that the game is starting
+      initialButton.style.display = 'none'
+
+      // 2. Start the game loop
+      messageIndex = 0
+      showNextConfirmation()
+    }
+
+    function showNextConfirmation() {
+      if (messageIndex >= bruhifyConfirmations.length) {
+        dialog.close()
+        dialog.style.display = 'none'
+        // *** SUCCESS STATE GOES HERE ***
+        new WinGame() // Call the new success class
+        return
+      }
+
+      // --- Use object with message and state ---
+      const confirmation = bruhifyConfirmations[messageIndex]
+      const message = confirmation.message
+      const state = confirmation.state
+      
+      // 1. Set the main dialog text (now above the buttons)
+      messageDisplay.textContent = message;
+
+      // 2. Set the character image state
+      Character.speak(message, state); 
+      
+      // 3. Show dialog
+      dialog.style.display = 'flex' // make dialog visible
+      dialog.show() // native dialog show
+    }
+
+
+    function handleYesClick() {
+      // Play ping sound on success
+      playSound(pingAudio)
+
+      dialog.close()
+      dialog.style.display = 'none'
+      messageIndex++
+
+      if (messageIndex < bruhifyConfirmations.length) {
+        showNextConfirmation()
+      } else {
+        // Explicitly handle the win state here as well, just in case
+        new WinGame()
+      }
+    }
+
+    function handleNoClick() {
+      dialog.close()
+      dialog.style.display = 'none'
+      new bruhify()
+    }
+    
+    // --- Developer Skip Logic ---
+    function handleKeyDown(event) {
+        // Check if the URL is localhost:5500
+        const isLocalhost = location.href.includes('localhost:5500');
+        
+        // Check for the key combo: W key + Alt key + (Ctrl key OR Meta key (Cmd on Mac))
+        const isWinCombo = event.key === 'W' && event.altKey && (event.ctrlKey || event.metaKey); 
+
+        if (isLocalhost && isWinCombo) {
+            console.log('Developer skip combo detected on localhost! Skipping to win state.');
+            event.preventDefault(); // Prevent default browser actions (like opening history/downloads)
+            
+            // Only trigger if we aren't already on the win screen
+            if (document.getElementById('win-screen') === null) {
+              new WinGame();
+            }
+        }
+    }
+
+
+    // --- Initialization ---
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // Attach event listeners to game buttons
+      yesButton.addEventListener('click', handleYesClick)
+      noButton.addEventListener('click', handleNoClick)
+
+      // This attaches the game start function to the button
+      initialButton.addEventListener('click', startConfirmationChain)
+
+      // Attach toggle function to audio icon
+      audioIcon.addEventListener('click', toggleAudio)
+      
+      // Keydown listener for developer skip
+      document.addEventListener('keydown', handleKeyDown);
+
+      // We ensure the dialog is CLOSED immediately via JavaScript
+      dialog.close()
+      // Added display:none to initialization to hide it visually
+      dialog.style.display = 'none';
+      Character.hide(); // Hide character initially
+    })
+
+    window.CloudStorage.waitForLoad().then(function () {
+      document.querySelector('#loader67').style.display = 'none'
+
+      // Show the initial button when the page finishes loading
+      initialButton.style.display = 'block'
+    })
+  </script>
+</body>
+
+</html>

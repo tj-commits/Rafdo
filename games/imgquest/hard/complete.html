@@ -1,0 +1,57 @@
+<!doctype html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="pinterest" content="nopin">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    
+    <script src="/games/imgquest/ife/auralink.js"></script>
+    <script src="/games/imgquest/ife/client.js"></script>
+  
+    <style>
+        body {
+            z-index: 99999999999999999;
+            font-family: sans-serif
+        }
+    </style>
+  <title>WHAT?!?!?!?!?!?!?!?! - ImageQuest</title>
+</head>
+<body>
+  <h1>OH MY GOSH YOU SO SUPREME!!!!1</h1>
+
+<button id="gallery-button" style="display: none">Go to gallery</button>
+  <p>YOU ARE SO POWERFUL HOW THE HECK DID YOU COMPLETE THAT QUEST!?!!?!!? YOU UNLOCK 1 IMAGES!! </p>
+<img src="imabutton.png" alt="I'm a button"width="300" />
+  <script>
+    const galleryButton = document.getElementById('gallery-button')
+
+    window.CloudStorage.waitForLoad().then(() => {
+        window.CloudStorage.setItem('gallery:extremelyhard', 'mhm')
+
+        galleryButton.addEventListener('click', () => {
+            galleryButton.disabled = true
+            window.CloudStorage.syncBeforeRedirect().then(() => {
+                location.assign('/games/imgquest/gallery.html')
+            }).catch(error => {
+                console.error("Error during cloud sync before redirect:", error)
+                location.assign('/games/imgquest/gallery.html') 
+            })
+        })
+
+        galleryButton.style.display = 'block'
+
+    }).catch(error => {
+        console.error("Error waiting for CloudStorage to load:", error)
+        
+        galleryButton.addEventListener('click', () => {
+             location.assign('/games/imgquest/gallery.html')
+        })
+        galleryButton.style.display = 'block'
+    })
+  </script>
+</body></html>

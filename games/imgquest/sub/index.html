@@ -1,0 +1,31 @@
+
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+    <script src="/games/imgquest/ife/client.js"></script>
+<meta http-equiv="Expires" content="0" /><script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    
+    <script src="/games/imgquest/ife/auralink.js"></script>
+
+<h1>Subscribe</h1>
+<p>To complete this quest, please subscribe to my YouTube channel. Thank you.</p>
+<button id="button">Subscribe</button>
+<p id="submsg"></p>
+<script defer>
+    const b = document.querySelector('#button')
+    var m = document.querySelector('#submsg')
+    b.addEventListener('click', () => {
+        window.open('https://www.youtube.com/channel/UCwuZiSR3h-UC0MvI_mVDBXQ?sub_confirmation=1')
+       window.CloudStorage.setItem('gallery:subbed', 'yes')
+        m.textContent = 'Thank you for subscribing! 1 new image unlocked'
+        let img = document.createElement('img')
+        img.src = '/sub/chanelbaner.jpg'
+        img.width = '500'
+        document.body.append(img)
+        let gh = document.createElement('button')
+        gh.textContent = 'Go to gallery'
+        gh.onclick = () => location.assign('/gallery.html')
+        document.body.append(gh)
+    })
+</script>

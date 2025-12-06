@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>ImageQuest</title>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+    <!-- Load external CSS styles -->
+    <link rel="stylesheet" href="styles.css" />
+    <!-- add console meessage -->
+    <script>console.log('wanna work at rafdo? email me at thefoxjones@gmail.com')</script>
+    <!-- load firebase -->
+     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    
+    <script src="/games/imgquest/ife/auralink.js"></script>
+<!-- checkhttp-->
+    <script defer src="/games/imgquest/ife/client.js"></script>
+    <!-- fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        body,.share-tech-mono-regular {
+  font-family: "Share Tech Mono", monospace;
+  font-weight: 400;
+  font-style: normal;
+}
+</style>
+    <!-- style -->
+    
+    <style>
+
+        button {
+            padding: 10px;
+            border: none;
+            outline: none;
+            background: red;
+            color: white;
+            font-family: sans-serif;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 200ms ease-in-out;
+            margin-right: 5px;
+            min-width: 5em;
+        }
+        
+        
+        
+        
+        
+        button:hover {
+            background: #fc7672
+        }
+        body {
+             background: #333;
+             color: white;
+        }
+/* Place your css in this section */
+.center{display: flex;
+  justify-content: center;
+  align-items:center;
+  flex-direction:column;
+  -ms-flex-direction:column;
+  display: -webkit-flex;
+  /*height: 100vh;*/;flex-grow:1;width:200vh;}
+        .welcome {
+            text-transform:uppercase;
+            flex-grow:1;
+            width:unset !important; /*some of the dumbest code*/
+position: absolute;
+left: 35px;
+            width:20px;
+            z-index: -1;
+        }
+        .welcome marquee {
+/* Empty ruleset for performance, maybe */
+        }
+         .welcome2 {
+            text-transform:uppercase;
+            flex-grow:1;
+            width:unset !important; /*some of the dumbest code*/
+position: absolute;
+right: 35px;
+            width:20px;
+            z-index: -1;
+        }
+        /* style the options: the buttons for what our user can do */
+        .options {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top:25vh;
+        }
+        /* style an individual option button */
+        .options > button {
+            /*<!--width: fit-content !important;-->
+                */background:none;outline: none;
+                    border: none
+                    ;font-size:20px;color:#006400;
+                    border-radius: 10px; background: #f8f8f8;padding:
+                        10px;cursor: pointer;width:7em
+        }
+
+        .options>button:hover {
+            background: #eee;
+            /*width: 120px;
+   reerqereqrqeeq             */text-align: center;
+        }
+
+        @media only screen and (max-width:1120px) {
+  /*style for mobile*/
+  .welcome, .welcome2 {
+      display: none;
+  }
+}
+
+.we {
+    opacity: 0.45;
+    color: #49bcf5
+}
+        </style>
+  </head>
+  <body>
+
+            <noscript>
+                <div style="height: 100vh; width: 100vw; display: flex; align-items: center; justify-content: center; position: absolute; margin: 0; background: white; color: black; z-index:9999"><style>html { overflow-y: hidden; } </style><p style="font-size: 3em;">Please enable JavaScript for this site to work. why do you even have it disabled anyway :</p></div>
+            </noscript>
+      <!--<div class="container">-->
+    <!--<button onclick="location.assign('https://gamesfromrafdo.weebly.com')">Back to Rafdo Games &larr;</button>
+    <button onclick="location.assign('/')">Back to the Rafdo homepage &larr;</button>
+    <div class="center">
+
+    <h1 class="welcome"><sup>Welcome to ImageQuest</sup></h1>
+    <button id="btn-1id">enter </button>
+    </div>-->
+    <h1 class="welcome we"><marquee behavior="alternate" direction="up" class="share-tech-mono-regular">Welcome to ImageQuest</marquee></h1>
+     <h1 class="welcome2 we"><marquee behavior="alternate" direction="up" class="share-tech-mono-regular">Welcome to ImageQuest</marquee></h1>
+    <div class="options">
+        <h1 style="color:white;border-radius:10px;padding: 10px;background:#333;font-size:3em;" class="share-tech-mono-regular">ImageQuest</h1>
+    <button id="btn-1id"  class="share-tech-mono-regular">Play</button>
+    <div style="visibility:hidden;font-size:7px;">spacer</div>
+    <button onclick="location.assign('how-to-play.html?ref=title')"  class="share-tech-mono-regular">How To Play</button>
+    <div style="visibility:hidden;font-size:7px;">spacer</div>
+    <button onclick="location.assign('/')"  class="share-tech-mono-regular">Exit</button>
+    </div>
+    <!-- Load external JavaScript -->
+    <script src="scripts.js"></script><!--</div>-->
+  </body>
+</html>
+
+<!-- copyright real life -->

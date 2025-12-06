@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    
+    <script src="/games/imgquest/ife/auralink.js"></script>
+  <title>2048 Game</title>
+</head>
+<body>
+  <h1>You unlocked two new images!!!!</h1>
+  <p>(unless you already lost before and then played the quest again and won, then you got the other)</p>
+  <button onclick="location.assign('/games/imgquest/gallery.html')">go to gallery</button>
+  <img src="2048.png" alt="2048" width="300">
+  <img src="win.jpg" alt="You win!" width="300">
+  <script>
+   window.CloudStorage.setItem('gallery:2048lose', 'mhm')
+   window.CloudStorage.setItem('gallery:2048win', 'mhm')
+  </script>
+</body>
+</html>

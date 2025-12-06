@@ -1,0 +1,52 @@
+ <!doctype html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="refresh" content="7; url=/games/imgquest/dragonfly_eyeballs/toe.html" />
+
+        <title>ImageQuest DragonFly Eyeballs</title>
+
+        <!-- Load external CSS styles -->
+
+    <script src="/games/imgquest/ife/client.js"></script>
+        <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+        
+    </head>
+
+    <body>
+        <h1 id="notify">In <span id="n">5</span> seconds you will see a cat.</h1>
+        <script defer>
+            var n = 5;
+var d = false;
+var notify = document.getElementById("notify");
+var number = document.getElementById("n");
+var i2 = setInterval(function() {
+  if (n === 0) {
+    clearInterval(i2);
+  }
+  number.innerHTML = parseFloat(number.innerHTML)-1;
+}, 1000);
+var interval = setTimeout(function() {
+var documnet = document;
+  var image = document.createElement("img");
+  var width = 500;
+  var height = 300;
+  image.setAttribute("src", "/games/imgquest/dragonfly_eyeballs/cat.png");
+  image.setAttribute("width", width);
+image.setAttribute('alt', "A cute cat.")
+  image.setAttribute("height", height);
+  var p = document.createElement("p");
+  p.innerText = "Don't leave the page or you won't get the image"
+  document.body.removeChild(notify)
+  document.body.append(image);
+  documnet.body.append(p)
+
+  clearTimeout(interval);
+}, 4500);
+        </script>
+    </body>
+
+</html>

@@ -9,7 +9,6 @@ Disallow: /oldjmcs
 Disallow: /home-rafdo-homepage-home-com
 Disallow: /email-search
 Disallow: /emailsearchinstances
-Disallow: /hegira/
 Disallow: /whatisdomain/
 Disallow: /animations/
 Disallow: /app/analytics/

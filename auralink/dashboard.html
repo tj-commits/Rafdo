@@ -98,17 +98,14 @@
 
 <body>
     <div class="container">
-        <h1>AuraLink Dashboard</h1>
+            <button onclick="location.assign('/')">Back To Rafdo Homepage</button>
+            <button onclick="location.assign('/auralink/')">Visit AuraLink main page</button>
+        <h1>AuraLink Status</h1>
         <div id="auth-status" class="hidden">
             <div class="actions">
                 <p>Logged in as: <strong id="user-email"></strong></p>
                 <button id="logout-btn">Log Out</button>
             </div>
-
-            <h2>AuraLink-Connected Applications</h2>
-            <div id="app-list" class="app-list">
-                </div>
-            <p id="status-message"></p>
         </div>
 
         <div id="loading-message">
@@ -129,59 +126,11 @@
             measurementId: "G-97GWD74F3Y" // Using Notepad's measurementId
         };
 
-        const syncedApps = [
-            // dataPath holds the document path template
-            { name: 'Rafdo Notepad', path: '/r2/notepad/', dataPath: 'notes/{uid}' },
-            { name: 'ImageQuest', path: '/games/imgquest/', dataPath: 'users/{uid}/settings/localStorage' }
-        ];
 
         // --- 2. FIREBASE INITIALIZATION ---
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         const db = firebase.firestore();
-
-
-        // --- UTILITY: LOCAL STORAGE CLEANUP FUNCTION ---
-        // Clears specific keys from local storage based on rules
-        function clearLocalStorageKeys(appName) {
-            const keysToRemove = [];
-            
-            // Define rules based on the application name
-            if (appName === 'ImageQuest') {
-                for (let i = 0; i < localStorage.length; i++) {
-                    const key = localStorage.key(i);
-                    if (
-                        key.startsWith('settingid:') ||
-                        key.startsWith('gallery:') ||
-                        key === 'eight' ||
-                        key.startsWith('imagequest:') ||
-                        key === 'penetrated'
-                    ) {
-                        keysToRemove.push(key);
-                    }
-                }
-            } else if (appName === 'Rafdo Notepad') {
-                for (let i = 0; i < localStorage.length; i++) {
-                    const key = localStorage.key(i);
-                    if (
-                        key.startsWith('note-') || 
-                        key === 'current'
-                    ) {
-                        keysToRemove.push(key);
-                    }
-                }
-            }
-
-            // Remove the identified keys
-            if (keysToRemove.length > 0) {
-                console.log(`Clearing ${keysToRemove.length} associated local storage keys for ${appName}.`);
-                keysToRemove.forEach(key => {
-                    localStorage.removeItem(key);
-                });
-            } else {
-                console.log(`No specific local storage keys found to clear for ${appName}.`);
-            }
-        }
 
 
         // --- 3. AUTHENTICATION LOGIC ---
@@ -210,74 +159,6 @@
                 alert("Error logging out: " + error.message);
             });
         });
-
-
-        // --- 4. APP LIST AND DATA DELETION LOGIC ---
-        function renderAppList(uid) {
-            const appListDiv = document.getElementById('app-list');
-            appListDiv.innerHTML = '';
-
-            syncedApps.forEach(app => {
-                const appDiv = document.createElement('div');
-                
-                // App Link (Clicking takes user to the app)
-                const link = document.createElement('a');
-                link.href = app.path;
-                link.className = 'app-link';
-                link.textContent = app.name;
-
-                // Delete Button
-                const deleteButton = document.createElement('button');
-                deleteButton.className = 'delete-btn';
-                deleteButton.textContent = `Delete ${app.name} Data`;
-                deleteButton.onclick = () => handleDeleteData(uid, app.dataPath, app.name);
-
-                appDiv.appendChild(link);
-                appDiv.appendChild(deleteButton);
-                appListDiv.appendChild(appDiv);
-            });
-        }
-
-        async function handleDeleteData(uid, dataPath, appName) {
-            const statusMessage = document.getElementById('status-message');
-            
-            // CONVERTING TEMPLATE PATH TO A FIREBASE DOCUMENT REFERENCE
-            const finalPath = dataPath.replace('{uid}', uid);
-            const userRef = db.doc(finalPath); // Use db.doc() for a full path
-
-            if (!confirm(`Are you sure you want to delete ALL your saved data for ${appName}? This action cannot be undone.`)) {
-                statusMessage.textContent = `Data deletion cancelled for ${appName}.`;
-                return;
-            }
-            
-            statusMessage.textContent = `Deleting data for ${appName}...`;
-
-            try {
-                // 1. DELETE FROM CLOUD
-                await userRef.delete(); 
-
-                // 2. CLEAN UP LOCAL STORAGE (Only runs if cloud delete succeeds)
-                clearLocalStorageKeys(appName); 
-
-                statusMessage.textContent = `✅ Successfully deleted all data for ${appName}!`;
-                statusMessage.style.color = '#00ff00';
-            } catch (error) {
-                // Handle errors
-                if (error.code === 'not-found') {
-                    statusMessage.textContent = `No cloud data found for ${appName} to delete.`;
-                    statusMessage.style.color = '#ffff00';
-                } else if (error.code === 'permission-denied' && dataPath.includes('localStorage')) {
-                    statusMessage.textContent = `❌ Error deleting data for ${appName}: Permissions failed. Ensure the document has no sub-collections.`;
-                    statusMessage.style.color = '#ff0000';
-                    console.error("Error deleting document (potential sub-collection issue): ", error);
-                }
-                else {
-                    statusMessage.textContent = `❌ Error deleting data for ${appName}: ${error.message}`;
-                    statusMessage.style.color = '#ff0000';
-                    console.error("Error deleting document: ", error);
-                }
-            }
-        }
 
     </script>
 </body>

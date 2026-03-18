@@ -194,4 +194,4 @@
 </script>
 </body>
 </html> -->
-<script>location.replace('/r2/notepad/?dashboard=1&return=/games/imgquest/index.html')</script>
+<script>location.replace('/r2/notepad/?dashboard=1&return=' + (new URLSearchParams(location.search).get("type") === "hegira" ? "/hegira/index.html" : "/games/imgquest/discover.html"))</script>

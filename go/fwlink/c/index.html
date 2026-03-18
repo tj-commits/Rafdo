@@ -7,6 +7,7 @@
 </div>
 <script>
     // JonesMcSites
+    // Rafdo Link Redirects (Rafdo not JonesMcSites)
     let params = new URLSearchParams(document.location.search)
     let linkid = params.get('LinkId')
     var conent = document.querySelector('#contwet')
@@ -34,7 +35,10 @@
         "0018": "/app/randemoji/",
         
         "0019":"/app/maps/",
-        "0020": "https://rafdo.gt.tc/rafdocaptcha/"
+        "0020": "https://rafdo.gt.tc/rafdocaptcha/",
+        "0021": "https://youtube.com/channel/UCwuZiSR3h-UC0MvI_mVDBXQ",
+
+        "__test_timeout__": "/hegira/webredirect/autodetect?sse=sq90"
     }
     if (linkid == null) {
         location.replace('/go/fwlink/c/?LinkId=0001')

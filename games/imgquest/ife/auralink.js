@@ -1,4 +1,3 @@
-/* Place your JavaScript in this file */
 const FIREBASE_SECRETS = {
   apiKey: "AIzaSyA0od4tjCBHxltVHE3Uw-Ht5Frd2kDSOWc",
   authDomain: "winged-amp-476818-s8.firebaseapp.com",
@@ -9,21 +8,12 @@ const FIREBASE_SECRETS = {
   measurementId: "G-B7FN0MX2JD"
 }
 
-//*const SIGN_IN_PAGE_PATH = '/games/imgquest/signin.html';  
-
-// */ // i thought i needed to close the comment above with a closing comment but then i realized i put another slash so i had to comment THIS out
+const SIGN_IN_PAGE_PATH = '/games/imgquest/signin.html';  
 
 const app = firebase.initializeApp(FIREBASE_SECRETS)
   , auth = app.auth(), db =
-    app.
+    app.firestore()
 
-
-      // 6 7 
-
-
-      firestore()
-
-// spam
 let spam_throttle_id = null
 // aura links
 const u = (usr) => {
@@ -34,7 +24,7 @@ const u = (usr) => {
   // this is how we fix the economy
   const t = usr
     ? `Signed in to AuraLink as ${usr.email || 'IF YOU SEE THEN THE WORLD IS ENDING'}`  // by if you see this then on the webpage, not in code 🥀🥀🥀🥀🥀
-    : 'Sign In / Register AuraLink to sync your ImageQuest progress' // SIGN IN PLEASSSSSSSSSSSSSSSSSSSSSSSS
+    : 'Sign In / Register AuraLink to sync' // SIGN IN PLEASSSSSSSSSSSSSSSSSSSSSSSS
 
 
   auralinks.forEach((el) => {
